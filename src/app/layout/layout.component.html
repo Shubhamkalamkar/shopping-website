@@ -1,2 +1,6 @@
-<app-header />
-<router-outlet />
+<app-header (menuClick)="toggleSidebar()"></app-header>
+<app-sidebar [isOpen]="isSidebarOpen" (sidebarToggle)="toggleSidebar()"></app-sidebar>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  styleUrls: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
   imports: [RouterOutlet, NgbModule],
 })
 export class AppComponent {

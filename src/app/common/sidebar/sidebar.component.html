@@ -1,0 +1,87 @@
+<div class="sidebar" [class.active]="isOpen">
+  <div class="sidebar-header">
+    <button class="close-btn" (click)="toggleSidebar()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-content">
+    <!-- Categories Section -->
+    <div class="sidebar-section">
+      <h3>Categories</h3>
+      <ul class="category-list">
+        <li>
+          <a routerLink="/men" (click)="toggleSidebar()">
+            <i class="fas fa-male"></i>
+            Men
+          </a>
+        </li>
+        <li>
+          <a routerLink="/women" (click)="toggleSidebar()">
+            <i class="fas fa-female"></i>
+            Women
+          </a>
+        </li>
+        <li>
+          <a routerLink="/kids" (click)="toggleSidebar()">
+            <i class="fas fa-child"></i>
+            Kids
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Featured Section -->
+    <div class="sidebar-section">
+      <h3>Featured</h3>
+      <ul class="feature-list">
+        <li>
+          <a routerLink="/new-arrivals" (click)="toggleSidebar()">
+            <i class="fas fa-star"></i>
+            New Arrivals
+          </a>
+        </li>
+        <li>
+          <a routerLink="/bestsellers" (click)="toggleSidebar()">
+            <i class="fas fa-fire"></i>
+            Bestsellers
+          </a>
+        </li>
+        <li>
+          <a routerLink="/sale" (click)="toggleSidebar()">
+            <i class="fas fa-tag"></i>
+            Sale
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Account Section -->
+    <div class="sidebar-section">
+      <h3>Account</h3>
+      <ul class="account-list">
+        <li>
+          <a routerLink="/profile" (click)="toggleSidebar()">
+            <i class="fas fa-user"></i>
+            Profile
+          </a>
+        </li>
+        <li>
+          <a routerLink="/orders" (click)="toggleSidebar()">
+            <i class="fas fa-box"></i>
+            Orders
+          </a>
+        </li>
+        <li>
+          <a routerLink="/wishlist" (click)="toggleSidebar()">
+            <i class="fas fa-heart"></i>
+            Wishlist
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay -->
+<div class="sidebar-overlay" [class.active]="isOpen" (click)="toggleSidebar()"></div>
