@@ -1,0 +1,62 @@
+<div class="wishlist-sidebar" [class.open]="isOpen">
+  <div class="wishlist-header">
+    <h2>Wishlist</h2>
+    <button class="close-btn" (click)="closeSidebar()">×</button>
+  </div>
+
+  <div class="wishlist-items">
+    @if (wishlistItems$ | async; as items) {
+      @if (items.length > 0) {
+        @for (item of items; track item.id) {
+          <div class="wishlist-item">
+            <div class="item-image">
+              <img [src]="item.imageUrl" [alt]="item.name">
+            </div>
+            
+            <div class="item-details">
+              <h3 class="item-name" [routerLink]="['/product', item.id]">
+                {{ item.name }}
+              </h3>
+              
+              <div class="item-price">
+                <span class="current-price" [class.discounted]="item.discountedPrice">
+                  ${{ (item.discountedPrice || item.price).toFixed(2) }}
+                </span>
+                @if (item.discountedPrice) {
+                  <span class="original-price">
+                    ${{ item.price.toFixed(2) }}
+                  </span>
+                }
+              </div>
+
+              <div class="item-actions">
+                <button class="move-to-cart" (click)="moveToCart(item)">
+                  Move to Cart
+                </button>
+                <button class="remove-btn" (click)="removeFromWishlist(item)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="wishlist-actions">
+          <button class="clear-wishlist" (click)="clearWishlist()">
+            Clear Wishlist
+          </button>
+        </div>
+      } @else {
+        <div class="empty-wishlist">
+          <i class="fas fa-heart"></i>
+          <p>Your wishlist is empty</p>
+          <button class="continue-shopping" (click)="closeSidebar()">
+            Continue Shopping
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<div class="wishlist-overlay" [class.open]="isOpen" (click)="closeSidebar()"></div>

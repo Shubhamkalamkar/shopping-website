@@ -2,26 +2,26 @@
   <div class="header-container">
     <!-- Left Section -->
     <div class="header-left">
-      <button class="menu-btn">
+      <button class="menu-btn" (click)="toggleMobileMenu()">
         <i class="fas fa-bars"></i>
       </button>
-      <a href="/" class="brand">VASTRADO</a>
+      <a class="logo" routerLink="/">VASTRADO</a>
     </div>
 
     <!-- Center Section -->
     <div class="header-center">
       <div class="nav-links">
-        <a href="/men" class="nav-link">Men</a>
-        <a href="/women" class="nav-link">Women</a>
-        <a href="/kids" class="nav-link">Kids</a>
-        <a href="/sale" class="nav-link">Sale</a>
+        <a routerLink="/men" routerLinkActive="active">Men</a>
+        <a routerLink="/women" routerLinkActive="active">Women</a>
+        <a routerLink="/kids" routerLinkActive="active">Kids</a>
+        <a routerLink="/sale" routerLinkActive="active">Sale</a>
       </div>
     </div>
 
     <!-- Right Section -->
     <div class="header-right">
       <div class="search-box">
-        <input type="text" placeholder="Search for products...">
+        <input type="text" placeholder="Search for products..." (input)="search($event)">
         <button class="search-btn">
           <i class="fas fa-search"></i>
         </button>
@@ -30,9 +30,13 @@
         <button class="icon-btn">
           <i class="far fa-heart"></i>
         </button>
-        <button class="icon-btn">
+        <button class="cart-btn" (click)="toggleCart()">
           <i class="fas fa-shopping-bag"></i>
-          <span class="cart-count">0</span>
+          @if (cartItemCount$ | async; as count) {
+            @if (count > 0) {
+              <span class="cart-count">{{ count }}</span>
+            }
+          }
         </button>
         <button class="login-btn">
           <i class="far fa-user"></i>

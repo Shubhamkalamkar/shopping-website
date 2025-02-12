@@ -1,0 +1,53 @@
+<div class="product-card" *ngIf="product">
+  <div class="product-badges">
+    <span class="badge badge-new" *ngIf="product.createdAt | isNew">New</span>
+    <span class="badge badge-sale" *ngIf="product.onSale">Sale</span>
+    <span class="badge badge-bestseller" *ngIf="product.reviews > 100">Bestseller</span>
+  </div>
+  
+  <div class="product-image">
+    <img [src]="product.imageUrl" [alt]="product.name">
+    <div class="product-actions">
+      <button class="action-btn wishlist" (click)="onToggleWishlist()">
+        <i class="far" [class.fa-heart]="!isInWishlist" [class.fas]="isInWishlist"></i>
+      </button>
+      <button class="action-btn quickview" (click)="onQuickView()">
+        <i class="fas fa-eye"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <a [routerLink]="['/product', product.id]" class="product-name">{{ product.name }}</a>
+    
+    <div class="product-rating">
+      <app-star-rating [rating]="product.rating"></app-star-rating>
+      <span class="review-count">({{ product.reviews }})</span>
+    </div>
+
+    <div class="product-price">
+      <span class="current-price" [class.discounted]="product.discountedPrice">
+        {{ product.price | currency }}
+      </span>
+      <span class="discounted-price" *ngIf="product.discountedPrice">
+        {{ product.discountedPrice | currency }}
+      </span>
+    </div>
+
+    <div class="product-stock">
+      <ng-container *ngIf="product.inStock; else outOfStock">
+        <span class="text-success">In Stock</span>
+      </ng-container>
+      <ng-template #outOfStock>
+        <span class="text-danger">Out of Stock</span>
+      </ng-template>
+    </div>
+
+    <button class="add-to-cart-btn" 
+            (click)="onAddToCart()"
+            [disabled]="!product.inStock">
+      <i class="fas fa-shopping-cart"></i>
+      {{ !product.inStock ? 'Out of Stock' : 'Add to Cart' }}
+    </button>
+  </div>
+</div>

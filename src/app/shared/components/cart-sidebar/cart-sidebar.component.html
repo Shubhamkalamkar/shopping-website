@@ -1,0 +1,76 @@
+<div class="cart-sidebar" [class.open]="isOpen$ | async">
+  <div class="cart-header">
+    <h2>Shopping Cart</h2>
+    <button class="close-btn" (click)="closeCart()">×</button>
+  </div>
+
+  <div class="cart-items">
+    @if (cartItems$ | async; as items) {
+      @if (items.length > 0) {
+        <div class="cart-items-container">
+          <div class="cart-item" *ngFor="let item of items">
+            <div class="item-image">
+              <img [src]="item.product.imageUrl" [alt]="item.product.name">
+            </div>
+            
+            <div class="item-details">
+              <h3>{{ item.product.name }}</h3>
+              <div class="item-meta">
+                <span class="brand">{{ item.product.brand }}</span>
+                <span class="size" *ngIf="item.product.size">Size: {{ item.product.size }}</span>
+                <span class="color" *ngIf="item.product.color">Color: {{ item.product.color }}</span>
+              </div>
+              
+              <div class="price-container">
+                <span class="price" [class.discounted]="item.product.discountedPrice">
+                  ${{ (item.product.discountedPrice || item.product.price).toFixed(2) }}
+                </span>
+                <span class="discounted-price" *ngIf="item.product.discountedPrice">
+                  ${{ item.product.price.toFixed(2) }}
+                </span>
+              </div>
+
+              <div class="item-controls">
+                <div class="quantity-controls">
+                  <button (click)="updateQuantity(item, -1)" 
+                          [disabled]="item.quantity <= 1">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <span>{{ item.quantity }}</span>
+                  <button (click)="updateQuantity(item, 1)"
+                          [disabled]="!item.product.inStock">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                
+                <button class="remove-btn" (click)="removeItem(item.product.id)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <div class="cart-total">
+            <span>Total:</span>
+            <span class="total-amount">${{ cartTotal$ | async | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="cart-actions">
+            <button class="clear-cart" (click)="clearCart()">Clear Cart</button>
+            <button class="checkout" [routerLink]="['/checkout']">Checkout</button>
+          </div>
+        </div>
+      } @else {
+        <div class="empty-cart">
+          <i class="fas fa-shopping-cart"></i>
+          <p>Your cart is empty</p>
+          <button class="continue-shopping" (click)="closeCart()">Continue Shopping</button>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<div class="cart-overlay" [class.open]="isOpen$ | async" (click)="closeCart()"></div>

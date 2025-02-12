@@ -1,0 +1,109 @@
+<div class="filter-sidebar">
+  <div class="filter-section">
+    <h3>Price Range</h3>
+    <div class="price-range">
+      <input type="range" 
+             [min]="minPrice" 
+             [max]="maxPrice" 
+             [(ngModel)]="selectedPriceRange" 
+             (input)="onPriceRangeChange()">
+      <div class="price-labels">
+        <span>${{ minPrice }}</span>
+        <span>${{ selectedPriceRange }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Rating</h3>
+    <div class="rating-options">
+      @for (rating of [5, 4, 3, 2, 1]; track rating) {
+        <label class="rating-option">
+          <input type="checkbox" 
+                 [checked]="isRatingSelected(rating)"
+                 (change)="toggleRating(rating)">
+          <span class="stars">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <i class="fas fa-star" [class.filled]="star <= rating"></i>
+            }
+          </span>
+          <span class="count">({{ getRatingCount(rating) }})</span>
+        </label>
+      }
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Brand</h3>
+    <div class="brand-search">
+      <input type="text" 
+             placeholder="Search brands..."
+             [(ngModel)]="brandSearchQuery"
+             (input)="filterBrands()">
+    </div>
+    <div class="brand-options">
+      @for (brand of filteredBrands; track brand) {
+        <label class="brand-option">
+          <input type="checkbox" 
+                 [checked]="isSelectedBrand(brand)"
+                 (change)="toggleBrand(brand)">
+          {{ brand }}
+        </label>
+      }
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Color</h3>
+    <div class="color-options">
+      @for (color of availableColors; track color) {
+        <div class="color-option"
+             [style.background-color]="color.code"
+             [class.selected]="isSelectedColor(color.name)"
+             (click)="toggleColor(color.name)">
+          <i class="fas fa-check" *ngIf="isSelectedColor(color.name)"></i>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Size</h3>
+    <div class="size-options">
+      @for (size of availableSizes; track size) {
+        <div class="size-option"
+             [class.selected]="isSelectedSize(size)"
+             (click)="toggleSize(size)">
+          {{ size }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Availability</h3>
+    <div class="availability-options">
+      <label class="availability-option">
+        <input type="checkbox" 
+               [(ngModel)]="filters.inStock"
+               (change)="updateFilters()">
+        In Stock Only
+      </label>
+      <label class="availability-option">
+        <input type="checkbox" 
+               [(ngModel)]="filters.onSale"
+               (change)="updateFilters()">
+        On Sale
+      </label>
+    </div>
+  </div>
+
+  <div class="filter-actions">
+    <button class="apply-filters" (click)="applyFilters()">
+      Apply Filters
+    </button>
+    <button class="reset-filters" (click)="resetFilters()">
+      Reset All
+    </button>
+  </div>
+</div>

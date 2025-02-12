@@ -1,0 +1,157 @@
+.category-page {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: calc(100vh - 64px); // Adjust based on header height
+  background: #f8f9fa;
+}
+
+.filter-container {
+  position: sticky;
+  top: 64px; // Adjust based on header height
+  height: calc(100vh - 64px);
+  background: white;
+  border-right: 1px solid #eee;
+  z-index: 10;
+}
+
+.content {
+  padding: 2rem;
+}
+
+.category-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .search-box {
+      flex: 1;
+      position: relative;
+      max-width: 400px;
+
+      input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #3498db;
+        }
+      }
+
+      i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+    }
+
+    select {
+      padding: 0.75rem 2rem 0.75rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      font-size: 0.875rem;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.7rem center;
+      background-size: 1em;
+
+      &:focus {
+        outline: none;
+        border-color: #3498db;
+      }
+    }
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  i {
+    font-size: 3rem;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .category-page {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-page {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-container {
+    position: fixed;
+    left: -280px;
+    width: 280px;
+    transition: left 0.3s ease;
+
+    &.open {
+      left: 0;
+    }
+  }
+
+  .category-header {
+    .controls {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-box {
+        max-width: none;
+      }
+    }
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}

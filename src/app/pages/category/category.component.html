@@ -1,0 +1,75 @@
+<div class="category-page">
+  <!-- Filter Sidebar -->
+  <aside class="filter-container">
+    <app-filter-sidebar></app-filter-sidebar>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <!-- Header -->
+    <div class="category-header">
+      <h1>{{ categoryName | titlecase }}</h1>
+      <div class="controls">
+        <div class="search-box">
+          <input type="text" 
+                 placeholder="Search in {{ categoryName }}..."
+                 #searchInput
+                 (input)="filterService.updateSearch(searchInput.value)">
+          <i class="fas fa-search"></i>
+        </div>
+        <select (change)="sortProducts($event)">
+          <option *ngFor="let option of sortOptions; trackBy: trackOptionById" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid">
+      <ng-container *ngIf="products$ | async as products">
+        <ng-container *ngIf="paginatedProducts.length > 0">
+          <app-product-card
+            *ngFor="let product of paginatedProducts; trackBy: trackProductById"
+            [product]="product"
+            [isInWishlist]="isInWishlist(product.id)"
+            (addToCart)="addToCart(product)"
+            (toggleWishlist)="toggleWishlist(product)"
+            (quickView)="onQuickView(product)">
+          </app-product-card>
+        </ng-container>
+        <ng-container *ngIf="paginatedProducts.length === 0">
+          <div class="no-results">
+            <i class="fas fa-search"></i>
+            <h3>No Products Found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+          </div>
+        </ng-container>
+
+        <!-- Pagination -->
+        <ng-container *ngIf="products.length > itemsPerPage">
+          <app-pagination
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)">
+          </app-pagination>
+        </ng-container>
+      </ng-container>
+    </div>
+  </main>
+
+  <!-- Quick View Modal -->
+  <ng-container *ngIf="showQuickView && selectedProduct">
+    <app-quick-view-modal
+      [product]="selectedProduct"
+      [isInWishlist]="isInWishlist(selectedProduct.id)"
+      (close)="closeQuickView()"
+      (addToCart)="addToCart(selectedProduct)"
+      (toggleWishlist)="toggleWishlist(selectedProduct)">
+    </app-quick-view-modal>
+  </ng-container>
+
+  <!-- Wishlist Sidebar -->
+  <app-wishlist-sidebar></app-wishlist-sidebar>
+</div>
+
+<app-toast></app-toast>

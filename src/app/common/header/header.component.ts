@@ -1,20 +1,34 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../shared/services/cart.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  cartCount: number = 0;
+  cartItemCount$: Observable<number>;
+  isSidebarOpen = false;
 
-  constructor() {}
+  constructor(private cartService: CartService) {
+    this.cartItemCount$ = this.cartService.getCartItemCount();
+  }
 
-  toggleMenu() {
+  toggleMobileMenu() {
     // Implement mobile menu toggle functionality
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  toggleCart() {
+    this.cartService.toggleCart();
   }
 
   search(event: Event) {

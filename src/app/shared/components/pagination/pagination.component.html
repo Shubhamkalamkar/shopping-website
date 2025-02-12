@@ -1,0 +1,38 @@
+<div class="pagination">
+  <button 
+    class="page-btn" 
+    [disabled]="currentPage === 1"
+    (click)="changePage(1)">
+    <i class="fas fa-angle-double-left"></i>
+  </button>
+  
+  <button 
+    class="page-btn"
+    [disabled]="currentPage === 1"
+    (click)="changePage(currentPage - 1)">
+    <i class="fas fa-angle-left"></i>
+  </button>
+
+  @for (page of pages; track page) {
+    <button 
+      class="page-btn" 
+      [class.active]="page === currentPage"
+      (click)="changePage(page)">
+      {{ page }}
+    </button>
+  }
+
+  <button 
+    class="page-btn"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(currentPage + 1)">
+    <i class="fas fa-angle-right"></i>
+  </button>
+
+  <button 
+    class="page-btn"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(totalPages)">
+    <i class="fas fa-angle-double-right"></i>
+  </button>
+</div>
