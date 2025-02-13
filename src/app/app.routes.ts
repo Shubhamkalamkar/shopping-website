@@ -1,64 +1,65 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './features/home/home.component';
+import { DealsComponent } from './features/deals/deals.component';
+import { NewArrivalsComponent } from './features/new-arrivals/new-arrivals.component';
+import { CartComponent } from './features/cart/cart.component';
+import { CheckoutComponent } from './features/checkout/checkout.component';
+import { WishlistComponent } from './features/user/wishlist/wishlist.component';
+import { SettingsComponent } from './features/user/settings/settings.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./layout/layout.component').then((c) => c.LayoutComponent),
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./pages/home-page/home-page.component').then((c) => c.HomePageComponent),
-      },
-      {
-        path: 'men',
-        loadComponent: () =>
-          import('./pages/category/category.component').then((c) => c.CategoryComponent),
-        data: { category: 'men' }
-      },
-      {
-        path: 'women',
-        loadComponent: () =>
-          import('./pages/category/category.component').then((c) => c.CategoryComponent),
-        data: { category: 'women' }
-      },
-      {
-        path: 'kids',
-        loadComponent: () =>
-          import('./pages/category/category.component').then((c) => c.CategoryComponent),
-        data: { category: 'kids' }
-      },
-      {
-        path: 'new-arrivals',
-        loadComponent: () =>
-          import('./pages/new-arrivals/new-arrivals.component').then((c) => c.NewArrivalsComponent),
-      },
-      {
-        path: 'bestsellers',
-        loadComponent: () =>
-          import('./pages/bestsellers/bestsellers.component').then((c) => c.BestsellersComponent),
-      },
-      {
-        path: 'sale',
-        loadComponent: () =>
-          import('./pages/sale/sale.component').then((c) => c.SaleComponent),
-      },
-      {
-        path: 'profile',
-        loadComponent: () =>
-          import('./pages/profile/profile.component').then((c) => c.ProfileComponent),
-      },
-      {
-        path: 'orders',
-        loadComponent: () =>
-          import('./pages/orders/orders.component').then((c) => c.OrdersComponent),
-      },
-      {
-        path: 'wishlist',
-        loadComponent: () =>
-          import('./pages/wishlist/wishlist.component').then((c) => c.WishlistComponent),
-      }
-    ],
+    component: HomeComponent
   },
+  {
+    path: 'products',
+    loadChildren: () => import('./features/products/products.routes').then(m => m.productsRoutes)
+  },
+  {
+    path: 'categories',
+    loadChildren: () => import('./features/categories/categories.routes').then(m => m.categoriesRoutes)
+  },
+  {
+    path: 'deals',
+    component: DealsComponent
+  },
+  {
+    path: 'new-arrivals',
+    component: NewArrivalsComponent
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.routes').then(m => m.authRoutes)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./features/user/user.routes').then(m => m.userRoutes),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'cart',
+    component: CartComponent
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];

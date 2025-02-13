@@ -1,0 +1,120 @@
+<div class="orders-container">
+  <div class="orders-header">
+    <h2>My Orders</h2>
+    <div class="filter-tabs">
+      <button 
+        [class.active]="selectedFilter === 'all'"
+        (click)="filterOrders('all')">
+        All Orders
+      </button>
+      <button 
+        [class.active]="selectedFilter === 'active'"
+        (click)="filterOrders('active')">
+        Active Orders
+      </button>
+      <button 
+        [class.active]="selectedFilter === 'completed'"
+        (click)="filterOrders('completed')">
+        Completed
+      </button>
+      <button 
+        [class.active]="selectedFilter === 'returned'"
+        (click)="filterOrders('returned')">
+        Returns
+      </button>
+    </div>
+  </div>
+
+  <div class="orders-list" *ngIf="filteredOrders.length; else noOrders">
+    <div class="order-card" *ngFor="let order of filteredOrders">
+      <div class="order-header">
+        <div class="order-info">
+          <span class="order-number">Order #{{ order.id }}</span>
+          <span class="order-date">{{ order.orderDate | date }}</span>
+        </div>
+        <div class="order-status" [class]="getStatusClass(order.status)">
+          {{ order.status | titlecase }}
+        </div>
+      </div>
+
+      <div class="order-items">
+        <div class="item" *ngFor="let item of order.items">
+          <img [src]="item.image" [alt]="item.name" class="item-image">
+          <div class="item-details">
+            <h4>{{ item.name }}</h4>
+            <p class="item-meta" *ngIf="item.selectedSize || item.selectedColor">
+              <span *ngIf="item.selectedSize">Size: {{ item.selectedSize }}</span>
+              <span *ngIf="item.selectedColor">Color: {{ item.selectedColor }}</span>
+            </p>
+            <p class="item-quantity">Quantity: {{ item.quantity }}</p>
+            <p class="item-price">{{ item.price * item.quantity | currency }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-footer">
+        <div class="delivery-status">
+          <i class="fas fa-truck"></i>
+          <span>{{ getDeliveryStatus(order) }}</span>
+        </div>
+
+        <div class="order-total">
+          <span>Total:</span>
+          <strong>{{ order.total | currency }}</strong>
+        </div>
+
+        <div class="order-actions">
+          <a [routerLink]="['/user/orders', order.id]" class="btn-details">
+            View Details
+          </a>
+          
+          <button 
+            *ngIf="canRequestReturn(order)"
+            [routerLink]="['/user/returns/new', order.id]"
+            class="btn-return">
+            Request Return
+          </button>
+
+          <button 
+            *ngIf="order.status === 'delivered'"
+            (click)="reorder(order)"
+            class="btn-reorder">
+            Reorder
+          </button>
+
+          <a 
+            *ngIf="order.trackingNumber && order.status === 'shipped'"
+            [href]="'https://track.carrier.com/' + order.trackingNumber"
+            target="_blank"
+            class="btn-track">
+            Track Package
+          </a>
+        </div>
+      </div>
+
+      <div class="return-status" *ngIf="order.returnRequest">
+        <div class="return-badge" [class]="'return-' + order.returnRequest.status">
+          Return {{ order.returnRequest.status | titlecase }}
+        </div>
+        <div class="return-details" *ngIf="order.returnRequest.status !== 'pending'">
+          <p *ngIf="order.returnRequest.approvalDate">
+            {{ order.returnRequest.status === 'approved' ? 'Approved' : 'Rejected' }} on 
+            {{ order.returnRequest.approvalDate | date }}
+          </p>
+          <p *ngIf="order.returnRequest.refundAmount">
+            Refund amount: {{ order.returnRequest.refundAmount | currency }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noOrders>
+    <div class="no-orders">
+      <i class="fas fa-shopping-bag"></i>
+      <h3>No orders found</h3>
+      <p>Looks like you haven't placed any orders yet.</p>
+      <a routerLink="/products" class="btn-shop">Start Shopping</a>
+    </div>
+  </ng-template>
+</div>

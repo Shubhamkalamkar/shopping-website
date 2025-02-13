@@ -1,0 +1,136 @@
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px);
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+  .signup-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.5s ease-out;
+
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.75rem;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 2rem;
+      color: #7f8c8d;
+      text-align: center;
+    }
+
+    .signup-form {
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #2c3e50;
+          font-weight: 500;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid #dcdfe6;
+          border-radius: 6px;
+          font-size: 1rem;
+          transition: border-color 0.2s, box-shadow 0.2s;
+
+          &:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+          }
+
+          &.error {
+            border-color: #e74c3c;
+          }
+        }
+
+        .error-message {
+          margin-top: 0.5rem;
+          color: #e74c3c;
+          font-size: 0.875rem;
+        }
+      }
+
+      .form-actions {
+        margin-top: 2rem;
+
+        button {
+          width: 100%;
+          padding: 0.875rem;
+          border: none;
+          border-radius: 6px;
+          background: #3498db;
+          color: white;
+          font-size: 1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background: #2980b9;
+          }
+
+          &:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .form-footer {
+        margin-top: 1.5rem;
+        text-align: center;
+
+        p {
+          margin: 0;
+          color: #7f8c8d;
+        }
+
+        a {
+          color: #3498db;
+          text-decoration: none;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #2980b9;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 1rem;
+
+    .signup-card {
+      padding: 1.5rem;
+    }
+  }
+}

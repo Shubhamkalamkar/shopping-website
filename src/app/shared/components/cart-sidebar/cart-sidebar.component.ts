@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { CartService, CartItem } from '../../services/cart.service';
+import { RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 import { Observable } from 'rxjs';
+import { CartItem } from '../../models/cart-item.model';
 
 @Component({
   selector: 'app-cart-sidebar',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
   templateUrl: './cart-sidebar.component.html',
-  styleUrls: ['./cart-sidebar.component.scss']
+  styleUrls: ['./cart-sidebar.component.scss'],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class CartSidebarComponent implements OnInit {
   cartItems$: Observable<CartItem[]>;
@@ -17,9 +18,9 @@ export class CartSidebarComponent implements OnInit {
   isOpen$: Observable<boolean>;
 
   constructor(private cartService: CartService) {
-    this.cartItems$ = this.cartService.getCartItems();
-    this.cartTotal$ = this.cartService.getCartTotal();
-    this.isOpen$ = this.cartService.isCartSidebarOpen();
+    this.cartItems$ = this.cartService.cartItems$;
+    this.cartTotal$ = this.cartService.cartTotal$;
+    this.isOpen$ = this.cartService.isCartOpen$;
   }
 
   ngOnInit(): void {}
@@ -30,16 +31,14 @@ export class CartSidebarComponent implements OnInit {
 
   updateQuantity(item: CartItem, change: number): void {
     const newQuantity = item.quantity + change;
-    if (newQuantity >= 0) {
-      this.cartService.updateQuantity(item.product.id, newQuantity);
+    if (newQuantity > 0) {
+      this.cartService.updateQuantity(item.id, newQuantity);
+    } else {
+      this.removeFromCart(item.id);
     }
   }
 
-  removeItem(productId: number): void {
+  removeFromCart(productId: number): void {
     this.cartService.removeFromCart(productId);
-  }
-
-  clearCart(): void {
-    this.cartService.clearCart();
   }
 }

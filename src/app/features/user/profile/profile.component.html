@@ -1,0 +1,250 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <h2>My Profile</h2>
+    <div class="profile-tabs">
+      <button [class.active]="activeTab === 'personal'" (click)="onTabChange('personal')">
+        Personal Info
+      </button>
+      <button [class.active]="activeTab === 'addresses'" (click)="onTabChange('addresses')">
+        Addresses
+      </button>
+      <button [class.active]="activeTab === 'payments'" (click)="onTabChange('payments')">
+        Payment Methods
+      </button>
+      <button [class.active]="activeTab === 'preferences'" (click)="onTabChange('preferences')">
+        Preferences
+      </button>
+    </div>
+  </div>
+
+  <div class="profile-content" [ngSwitch]="activeTab">
+    <!-- Personal Info Tab -->
+    <div *ngSwitchCase="'personal'" class="tab-content">
+      <form [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()" class="form-grid">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input id="firstName" type="text" formControlName="firstName">
+          <div class="error-message" *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+            First name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" type="text" formControlName="lastName">
+          <div class="error-message" *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+            Last name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email">
+          <div class="error-message" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+            Please enter a valid email
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" formControlName="phone">
+        </div>
+
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth</label>
+          <input id="dateOfBirth" type="date" formControlName="dateOfBirth">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="profileForm.invalid">Save Changes</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Addresses Tab -->
+    <div *ngSwitchCase="'addresses'" class="tab-content">
+      <div class="addresses-list" *ngIf="profile?.addresses?.length">
+        <div *ngFor="let address of profile?.addresses" class="address-card">
+          <div class="address-type">{{ address.type | titlecase }}</div>
+          <div class="address-details">
+            <p>{{ address.street }}</p>
+            <p>{{ address.city }}, {{ address.state }} {{ address.postalCode }}</p>
+            <p>{{ address.country }}</p>
+          </div>
+          <div class="address-actions">
+            <button (click)="editAddress(address)" class="edit-btn">Edit</button>
+            <button (click)="deleteAddress(address.id)" class="delete-btn">Delete</button>
+            <span *ngIf="address.isDefault" class="default-badge">Default</span>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()" class="form-grid">
+        <h3>{{ isEditingAddress ? 'Edit Address' : 'Add New Address' }}</h3>
+        
+        <div class="form-group">
+          <label for="addressType">Address Type</label>
+          <select id="addressType" formControlName="type">
+            <option value="home">Home</option>
+            <option value="work">Work</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="street">Street Address</label>
+          <input id="street" type="text" formControlName="street">
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" type="text" formControlName="city">
+        </div>
+
+        <div class="form-group">
+          <label for="state">State</label>
+          <input id="state" type="text" formControlName="state">
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input id="country" type="text" formControlName="country">
+        </div>
+
+        <div class="form-group">
+          <label for="postalCode">Postal Code</label>
+          <input id="postalCode" type="text" formControlName="postalCode">
+        </div>
+
+        <div class="form-group checkbox">
+          <label>
+            <input type="checkbox" formControlName="isDefault">
+            Set as default address
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="addressForm.invalid">
+            {{ isEditingAddress ? 'Update Address' : 'Add Address' }}
+          </button>
+          <button type="button" *ngIf="isEditingAddress" (click)="resetAddressForm()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Payment Methods Tab -->
+    <div *ngSwitchCase="'payments'" class="tab-content">
+      <div class="payment-methods-list" *ngIf="profile?.paymentMethods?.length">
+        <div *ngFor="let method of profile?.paymentMethods" class="payment-card">
+          <div class="payment-type">
+            <i [class]="'fab fa-cc-' + method.type"></i>
+            {{ method.type | titlecase }}
+          </div>
+          <div class="payment-details">
+            <p>•••• •••• •••• {{ method.lastFourDigits }}</p>
+            <p>Expires: {{ method.expiryDate }}</p>
+          </div>
+          <div class="payment-actions">
+            <button (click)="editPaymentMethod(method)" class="edit-btn">Edit</button>
+            <button (click)="deletePaymentMethod(method.id)" class="delete-btn">Delete</button>
+            <span *ngIf="method.isDefault" class="default-badge">Default</span>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="paymentForm" (ngSubmit)="onPaymentSubmit()" class="form-grid">
+        <h3>{{ isEditingPayment ? 'Edit Payment Method' : 'Add New Payment Method' }}</h3>
+
+        <div class="form-group">
+          <label for="paymentType">Payment Type</label>
+          <select id="paymentType" formControlName="type">
+            <option value="credit">Credit Card</option>
+            <option value="debit">Debit Card</option>
+            <option value="paypal">PayPal</option>
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="paymentForm.get('type')?.value !== 'paypal'">
+          <label for="cardNumber">Card Number</label>
+          <input id="cardNumber" type="text" formControlName="cardNumber" maxlength="16">
+        </div>
+
+        <div class="form-group" *ngIf="paymentForm.get('type')?.value !== 'paypal'">
+          <label for="expiryDate">Expiry Date</label>
+          <input id="expiryDate" type="text" formControlName="expiryDate" placeholder="MM/YY">
+        </div>
+
+        <div class="form-group" *ngIf="paymentForm.get('type')?.value !== 'paypal'">
+          <label for="cvv">CVV</label>
+          <input id="cvv" type="password" formControlName="cvv" maxlength="4">
+        </div>
+
+        <div class="form-group checkbox">
+          <label>
+            <input type="checkbox" formControlName="isDefault">
+            Set as default payment method
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="paymentForm.invalid">
+            {{ isEditingPayment ? 'Update Payment Method' : 'Add Payment Method' }}
+          </button>
+          <button type="button" *ngIf="isEditingPayment" (click)="resetPaymentForm()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Preferences Tab -->
+    <div *ngSwitchCase="'preferences'" class="tab-content">
+      <div class="preferences-section">
+        <h3>Email Preferences</h3>
+        <div class="preference-list">
+          <div class="preference-item">
+            <label>
+              <input type="checkbox" 
+                     [checked]="profile?.emailPreferences?.marketing"
+                     (change)="onEmailPreferencesChange({marketing: $any($event.target).checked})">
+              Marketing emails
+            </label>
+            <p class="preference-description">Receive emails about new products and promotions</p>
+          </div>
+
+          <div class="preference-item">
+            <label>
+              <input type="checkbox" 
+                     [checked]="profile?.emailPreferences?.orderUpdates"
+                     (change)="onEmailPreferencesChange({orderUpdates: $any($event.target).checked})">
+              Order updates
+            </label>
+            <p class="preference-description">Receive notifications about your orders</p>
+          </div>
+
+          <div class="preference-item">
+            <label>
+              <input type="checkbox" 
+                     [checked]="profile?.emailPreferences?.promotions"
+                     (change)="onEmailPreferencesChange({promotions: $any($event.target).checked})">
+              Special offers
+            </label>
+            <p class="preference-description">Receive emails about special offers and discounts</p>
+          </div>
+
+          <div class="preference-item">
+            <label>
+              <input type="checkbox" 
+                     [checked]="profile?.emailPreferences?.newsletter"
+                     (change)="onEmailPreferencesChange({newsletter: $any($event.target).checked})">
+              Newsletter
+            </label>
+            <p class="preference-description">Subscribe to our monthly newsletter</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

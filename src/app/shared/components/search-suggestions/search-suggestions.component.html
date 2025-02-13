@@ -1,0 +1,23 @@
+<div class="search-suggestions" [@fadeInOut]>
+  <div class="loading-spinner" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="suggestions-list" *ngIf="!isLoading && suggestions.length > 0">
+    <div class="suggestion-item" 
+         *ngFor="let product of suggestions"
+         (click)="onSuggestionClick(product)">
+      <div class="product-image">
+        <img [src]="product.imageUrl" [alt]="product.name">
+      </div>
+      <div class="product-info">
+        <h4>{{ product.name }}</h4>
+        <p class="price">{{ product.price | currency }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" *ngIf="!isLoading && suggestions.length === 0">
+    No products found
+  </div>
+</div>

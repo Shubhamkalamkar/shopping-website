@@ -12,9 +12,9 @@
       <div class="controls">
         <div class="search-box">
           <input type="text" 
-                 placeholder="Search in {{ categoryName }}..."
                  #searchInput
-                 (input)="filterService.updateSearch(searchInput.value)">
+                 placeholder="Search in {{ categoryName }}..."
+                 (input)="updateSearch(searchInput.value)">
           <i class="fas fa-search"></i>
         </div>
         <select (change)="sortProducts($event)">
@@ -32,7 +32,7 @@
             [product]="product"
             [isInWishlist]="isInWishlist(product.id)"
             (addToCart)="addToCart(product)"
-            (toggleWishlist)="toggleWishlist(product)"
+            (toggleWishlist)="toggleProductWishlist(product)"
             (quickView)="onQuickView(product)">
           </app-product-card>
         </ng-container>
@@ -64,7 +64,7 @@
       [isInWishlist]="isInWishlist(selectedProduct.id)"
       (close)="closeQuickView()"
       (addToCart)="addToCart(selectedProduct)"
-      (toggleWishlist)="toggleWishlist(selectedProduct)">
+      (toggleWishlist)="toggleProductWishlist(selectedProduct)">
     </app-quick-view-modal>
   </ng-container>
 

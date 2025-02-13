@@ -4,73 +4,69 @@
     <button class="close-btn" (click)="closeCart()">×</button>
   </div>
 
-  <div class="cart-items">
-    @if (cartItems$ | async; as items) {
-      @if (items.length > 0) {
-        <div class="cart-items-container">
-          <div class="cart-item" *ngFor="let item of items">
-            <div class="item-image">
-              <img [src]="item.product.imageUrl" [alt]="item.product.name">
-            </div>
-            
-            <div class="item-details">
-              <h3>{{ item.product.name }}</h3>
+  <div class="cart-content">
+    <ng-container *ngIf="(cartItems$ | async)?.length; else emptyCart">
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems$ | async">
+          <div class="item-image">
+            <img [src]="item.imageUrl" [alt]="item.name">
+          </div>
+          <div class="item-details">
+            <div class="item-info">
+              <h3>{{ item.name }}</h3>
               <div class="item-meta">
-                <span class="brand">{{ item.product.brand }}</span>
-                <span class="size" *ngIf="item.product.size">Size: {{ item.product.size }}</span>
-                <span class="color" *ngIf="item.product.color">Color: {{ item.product.color }}</span>
+                <span class="brand">{{ item.brand }}</span>
+                <span class="size" *ngIf="item.selectedSize">Size: {{ item.selectedSize }}</span>
+                <span class="color" *ngIf="item.selectedColor">Color: {{ item.selectedColor }}</span>
               </div>
-              
-              <div class="price-container">
-                <span class="price" [class.discounted]="item.product.discountedPrice">
-                  ${{ (item.product.discountedPrice || item.product.price).toFixed(2) }}
+            </div>
+            <div class="item-price">
+              <div>
+                <span class="price" [class.discounted]="item.discountedPrice">
+                  ${{ (item.discountedPrice || item.price).toFixed(2) }}
                 </span>
-                <span class="discounted-price" *ngIf="item.product.discountedPrice">
-                  ${{ item.product.price.toFixed(2) }}
+                <span class="discounted-price" *ngIf="item.discountedPrice">
+                  ${{ item.price.toFixed(2) }}
                 </span>
               </div>
-
-              <div class="item-controls">
-                <div class="quantity-controls">
-                  <button (click)="updateQuantity(item, -1)" 
-                          [disabled]="item.quantity <= 1">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <span>{{ item.quantity }}</span>
-                  <button (click)="updateQuantity(item, 1)"
-                          [disabled]="!item.product.inStock">
-                    <i class="fas fa-plus"></i>
-                  </button>
-                </div>
-                
-                <button class="remove-btn" (click)="removeItem(item.product.id)">
-                  <i class="fas fa-trash"></i>
+              <div class="quantity-controls">
+                <button 
+                  class="quantity-btn" 
+                  (click)="updateQuantity(item, -1)"
+                  [disabled]="item.quantity <= 1">
+                  -
+                </button>
+                <span class="quantity">{{ item.quantity }}</span>
+                <button 
+                  class="quantity-btn" 
+                  (click)="updateQuantity(item, 1)"
+                  [disabled]="!item.inStock">
+                  +
                 </button>
               </div>
+              <button class="remove-btn" (click)="removeFromCart(item.id)">
+                Remove
+              </button>
             </div>
           </div>
         </div>
-
-        <div class="cart-summary">
-          <div class="cart-total">
-            <span>Total:</span>
-            <span class="total-amount">${{ cartTotal$ | async | number:'1.2-2' }}</span>
-          </div>
-
-          <div class="cart-actions">
-            <button class="clear-cart" (click)="clearCart()">Clear Cart</button>
-            <button class="checkout" [routerLink]="['/checkout']">Checkout</button>
-          </div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span>${{ cartTotal$ | async | number:'1.2-2' }}</span>
         </div>
-      } @else {
-        <div class="empty-cart">
-          <i class="fas fa-shopping-cart"></i>
-          <p>Your cart is empty</p>
-          <button class="continue-shopping" (click)="closeCart()">Continue Shopping</button>
-        </div>
-      }
-    }
+        <button class="checkout-btn" routerLink="/checkout">Proceed to Checkout</button>
+      </div>
+    </ng-container>
   </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart">
+      <p>Your cart is empty</p>
+      <button class="continue-shopping" (click)="closeCart()">Continue Shopping</button>
+    </div>
+  </ng-template>
 </div>
 
 <div class="cart-overlay" [class.open]="isOpen$ | async" (click)="closeCart()"></div>

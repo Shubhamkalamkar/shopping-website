@@ -1,0 +1,98 @@
+<div class="return-request-container">
+  <div class="return-header">
+    <h2>Return Request</h2>
+    <p class="order-info" *ngIf="order">
+      Order #{{ order.id }} | Ordered on {{ order.orderDate | date }}
+    </p>
+  </div>
+
+  <form [formGroup]="returnForm" (ngSubmit)="onSubmit()" class="return-form">
+    <div class="return-items">
+      <div class="return-item" *ngFor="let itemForm of itemForms.controls; let i = index" [formGroupName]="i">
+        <div class="item-details">
+          <div class="item-image">
+            <img [src]="getOrderItem(i)?.image" [alt]="getOrderItem(i)?.name">
+          </div>
+          <div class="item-info">
+            <h4>{{ getOrderItem(i)?.name }}</h4>
+            <p class="item-meta" *ngIf="getOrderItem(i)?.selectedSize || getOrderItem(i)?.selectedColor">
+              <span *ngIf="getOrderItem(i)?.selectedSize">Size: {{ getOrderItem(i)?.selectedSize }}</span>
+              <span *ngIf="getOrderItem(i)?.selectedColor">Color: {{ getOrderItem(i)?.selectedColor }}</span>
+            </p>
+            <p class="item-price">{{ getOrderItem(i)?.price | currency }} each</p>
+          </div>
+        </div>
+
+        <div class="return-options">
+          <div class="form-group">
+            <label>Quantity to Return</label>
+            <div class="quantity-input">
+              <button type="button" 
+                      (click)="decrementQuantity(i)"
+                      [disabled]="getQuantity(i) === 0">
+                -
+              </button>
+              <input type="number" 
+                     formControlName="quantity"
+                     [max]="getMaxQuantity(i)"
+                     min="0">
+              <button type="button" 
+                      (click)="incrementQuantity(i)"
+                      [disabled]="getQuantity(i) === getMaxQuantity(i)">
+                +
+              </button>
+            </div>
+            <div class="quantity-hint">
+              Maximum: {{ getMaxQuantity(i) }}
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="getQuantity(i) > 0">
+            <label>Reason for Return</label>
+            <select formControlName="reason">
+              <option value="">Select a reason</option>
+              <option *ngFor="let reason of returnReasons" [value]="reason">
+                {{ reason }}
+              </option>
+            </select>
+
+            <div class="form-group" *ngIf="getReason(i) === 'Other'">
+              <label>Additional Details</label>
+              <textarea formControlName="details" 
+                        rows="2"
+                        placeholder="Please provide more details about your return reason"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="return-summary" *ngIf="getReturnItemCount() > 0">
+      <h3>Return Summary</h3>
+      <div class="summary-details">
+        <div class="summary-row">
+          <span>Items to Return:</span>
+          <span>{{ getReturnItemCount() }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Estimated Refund:</span>
+          <span class="refund-amount">{{ calculateRefundAmount() | currency }}</span>
+        </div>
+      </div>
+      <div class="refund-note">
+        * Final refund amount may vary based on item condition and return processing
+      </div>
+    </div>
+
+    <div class="return-actions">
+      <button type="button" class="btn-cancel" routerLink="/user/orders">
+        Cancel
+      </button>
+      <button type="submit" 
+              class="btn-submit" 
+              [disabled]="!isFormValid()">
+        Submit Return Request
+      </button>
+    </div>
+  </form>
+</div>

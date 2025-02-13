@@ -1,0 +1,97 @@
+<div class="filters-container" [@slideInOut]="isOpen">
+  <div class="filters-header">
+    <h3>Advanced Filters</h3>
+    <button class="close-btn" (click)="toggleFilter()">×</button>
+  </div>
+
+  <div class="filters-content">
+    <!-- Categories -->
+    <div class="filter-section">
+      <h4>Categories</h4>
+      <div class="checkbox-group">
+        <div *ngFor="let category of availableOptions.categories" class="checkbox-item">
+          <input type="checkbox" 
+                 [id]="'category-' + category"
+                 [checked]="isSelected('category', category)"
+                 (change)="toggleCategory(category)">
+          <label [for]="'category-' + category">{{ category }}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brands -->
+    <div class="filter-section">
+      <h4>Brands</h4>
+      <div class="checkbox-group">
+        <div *ngFor="let brand of availableOptions.brands" class="checkbox-item">
+          <input type="checkbox" 
+                 [id]="'brand-' + brand"
+                 [checked]="isSelected('brand', brand)"
+                 (change)="toggleBrand(brand)">
+          <label [for]="'brand-' + brand">{{ brand }}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors -->
+    <div class="filter-section">
+      <h4>Colors</h4>
+      <div class="color-group">
+        <div *ngFor="let color of availableOptions.colors" 
+             class="color-item"
+             [class.selected]="isSelected('color', color)"
+             (click)="toggleColor(color)">
+          <div class="color-circle" [style.background-color]="color"></div>
+          <span>{{ color }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sizes -->
+    <div class="filter-section">
+      <h4>Sizes</h4>
+      <div class="size-group">
+        <div *ngFor="let size of availableOptions.sizes" 
+             class="size-item"
+             [class.selected]="isSelected('size', size)"
+             (click)="toggleSize(size)">
+          {{ size }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Price Range -->
+    <div class="filter-section">
+      <h4>Price Range</h4>
+      <div class="price-range">
+        <input type="number" 
+               [value]="selectedFilters.priceRange.min"
+               (input)="updatePriceRange($event, 'min')"
+               placeholder="Min">
+        <span>to</span>
+        <input type="number" 
+               [value]="selectedFilters.priceRange.max"
+               (input)="updatePriceRange($event, 'max')"
+               placeholder="Max">
+      </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="filter-section">
+      <h4>Minimum Rating</h4>
+      <div class="rating-group">
+        <input type="range" 
+               min="0" 
+               max="5" 
+               step="0.5"
+               [(ngModel)]="selectedFilters.rating">
+        <span>{{ selectedFilters.rating }} stars</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters-footer">
+    <button class="reset-btn" (click)="resetFilters()">Reset</button>
+    <button class="apply-btn" (click)="applyFilters()">Apply Filters</button>
+  </div>
+</div>

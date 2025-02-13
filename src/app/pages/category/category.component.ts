@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { QuickViewModalComponent } from '../../shared/components/quick-view-modal/quick-view-modal.component';
-import { FilterSidebarComponent } from '../../shared/components/filter-sidebar/filter-sidebar.component';
-import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
-import { WishlistSidebarComponent } from '../../shared/components/wishlist-sidebar/wishlist-sidebar.component';
-import { ToastComponent } from '../../shared/components/toast/toast.component';
-import { ProductService } from '../../shared/services/product.service';
-import { CartService } from '../../shared/services/cart.service';
-import { FilterService } from '../../shared/services/filter.service';
-import { ToastService } from '../../shared/services/toast.service';
-import { Product } from '../../shared/models/product.model';
 import { Observable, map, tap } from 'rxjs';
+import { Product } from '../../shared/models/product.model';
+import { ProductService } from '../../shared/services/product.service';
+import { FilterService } from '../../shared/services/filter.service';
+import { CartService } from '../../shared/services/cart.service';
+import { ToastService } from '../../shared/services/toast.service';
+import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { FilterSidebarComponent } from '../../shared/components/filter-sidebar/filter-sidebar.component';
+import { WishlistSidebarComponent } from '../../shared/components/wishlist-sidebar/wishlist-sidebar.component';
+import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
+import { QuickViewModalComponent } from '../../shared/components/quick-view-modal/quick-view-modal.component';
+import { ToastComponent } from '../../shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-category',
@@ -20,25 +20,25 @@ import { Observable, map, tap } from 'rxjs';
   imports: [
     CommonModule,
     ProductCardComponent,
-    QuickViewModalComponent,
     FilterSidebarComponent,
-    PaginationComponent,
     WishlistSidebarComponent,
+    PaginationComponent,
+    QuickViewModalComponent,
     ToastComponent
   ],
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  products$: Observable<Product[]>;
-  selectedProduct: Product | null = null;
-  showQuickView = false;
+  products$!: Observable<Product[]>;
   categoryName: string = '';
-
-  // Pagination
   currentPage = 1;
   itemsPerPage = 12;
-  totalPages = 1;
+  totalItems = 0;
+  totalPages = 0;
+  wishlistVisible = false;
+  showQuickView = false;
+  selectedProduct: Product | null = null;
   paginatedProducts: Product[] = [];
 
   sortOptions = [
@@ -52,49 +52,47 @@ export class CategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService,
     public filterService: FilterService,
+    private cartService: CartService,
     private toastService: ToastService
-  ) {
-    this.products$ = this.productService.getProducts().pipe(
-      tap(products => {
-        this.updatePagination(products);
-      })
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      this.categoryName = data['category'] || '';
+    this.route.params.subscribe(params => {
+      this.categoryName = params['category'];
       this.loadProducts();
     });
   }
 
-  loadProducts(): void {
-    this.products$ = this.filterService.filterProducts(
-      this.productService.getProductsByCategory(this.categoryName)
-    ).pipe(
+  private loadProducts(): void {
+    const products = this.productService.getProductsByCategory(this.categoryName);
+    this.filterService.setProducts(products);
+    
+    this.products$ = this.filterService.getFilteredProducts().pipe(
       tap(products => {
         this.updatePagination(products);
+        this.updatePaginatedProducts(products);
       })
     );
   }
 
-  updatePagination(products: Product[]): void {
-    this.totalPages = Math.ceil(products.length / this.itemsPerPage);
-    this.paginatedProducts = this.getPaginatedProducts(products);
+  private updatePagination(products: Product[]): void {
+    this.totalItems = products.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = 1;
+    }
   }
 
-  getPaginatedProducts(products: Product[]): Product[] {
+  private updatePaginatedProducts(products: Product[]): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return products.slice(startIndex, endIndex);
+    this.paginatedProducts = products.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   onPageChange(page: number): void {
     this.currentPage = page;
     this.products$.subscribe(products => {
-      this.paginatedProducts = this.getPaginatedProducts(products);
+      this.updatePaginatedProducts(products);
     });
   }
 
@@ -113,8 +111,8 @@ export class CategoryComponent implements OnInit {
     this.toastService.success(`${product.name} added to cart`);
   }
 
-  toggleWishlist(product: Product): void {
-    if (this.isInWishlist(product.id)) {
+  toggleProductWishlist(product: Product): void {
+    if (this.productService.isInWishlist(product.id)) {
       this.productService.removeFromWishlist(product.id);
       this.toastService.info(`${product.name} removed from wishlist`);
     } else {
@@ -147,6 +145,7 @@ export class CategoryComponent implements OnInit {
       }),
       tap(products => {
         this.updatePagination(products);
+        this.updatePaginatedProducts(products);
       })
     );
   }
@@ -157,5 +156,13 @@ export class CategoryComponent implements OnInit {
 
   trackOptionById(index: number, option: { value: string; label: string }): string {
     return option.value;
+  }
+
+  updateSearch(query: string): void {
+    this.filterService.setSearchQuery(query);
+  }
+
+  toggleWishlist(): void {
+    this.wishlistVisible = !this.wishlistVisible;
   }
 }

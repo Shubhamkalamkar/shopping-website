@@ -1,96 +1,103 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CartItem } from '../models/cart-item.model';
 import { Product } from '../models/product.model';
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   private cartItems = new BehaviorSubject<CartItem[]>([]);
-  private isCartOpen = new BehaviorSubject<boolean>(false);
+  private isCartOpenSubject = new BehaviorSubject<boolean>(false);
+  
+  cartItems$ = this.cartItems.asObservable();
+  isCartOpen$ = this.isCartOpenSubject.asObservable();
+  
+  cartTotal$ = this.cartItems$.pipe(
+    map(items => items.reduce((total, item) => total + (item.price * item.quantity), 0))
+  );
 
-  constructor() {
-    // Load cart from localStorage if exists
+  cartCount$ = this.cartItems$.pipe(
+    map(items => items.reduce((count, item) => count + item.quantity, 0))
+  );
+
+  constructor(private toastService: ToastService) {
+    this.loadCart();
+  }
+
+  private loadCart(): void {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       this.cartItems.next(JSON.parse(savedCart));
     }
-
-    // Save cart to localStorage whenever it changes
-    this.cartItems.subscribe(items => {
-      localStorage.setItem('cart', JSON.stringify(items));
-    });
   }
 
-  getCartItems(): Observable<CartItem[]> {
-    return this.cartItems.asObservable();
+  private saveCart(): void {
+    localStorage.setItem('cart', JSON.stringify(this.cartItems.value));
   }
 
-  getCartItemCount(): Observable<number> {
-    return this.cartItems.pipe(
-      map(items => items.reduce((total, item) => total + item.quantity, 0))
-    );
+  getCartItem(id: number): CartItem | undefined {
+    return this.cartItems.value.find(item => item.id == id);
   }
 
-  getCartTotal(): Observable<number> {
-    return this.cartItems.pipe(
-      map(items => items.reduce((total, item) => {
-        const price = item.product.discountedPrice || item.product.price;
-        return total + (price * item.quantity);
-      }, 0))
-    );
-  }
-
-  addToCart(product: Product): void {
+  addToCart(product: Product, quantity: number = 1, size?: string, color?: string): void {
     const currentItems = this.cartItems.value;
-    const existingItem = currentItems.find(item => item.product.id === product.id);
+    const existingItem = currentItems.find(item => 
+      item.id == product.id && 
+      item.selectedSize === size && 
+      item.selectedColor === color
+    );
 
     if (existingItem) {
-      existingItem.quantity++;
+      existingItem.quantity += quantity;
       this.cartItems.next([...currentItems]);
     } else {
-      this.cartItems.next([...currentItems, { product, quantity: 1 }]);
+      const newItem: CartItem = {
+        ...product,
+        quantity,
+        selectedSize: size,
+        selectedColor: color
+      };
+      this.cartItems.next([...currentItems, newItem]);
     }
+    this.saveCart();
+    this.openCart();
+    this.toastService.show('Added to cart', 'success');
   }
 
-  removeFromCart(productId: number): void {
-    const currentItems = this.cartItems.value;
-    this.cartItems.next(currentItems.filter(item => item.product.id !== productId));
+  updateQuantity(id: number, quantity: number): void {
+    const items = this.cartItems.value;
+    const updatedItems = items.map(item => 
+      item.id == id ? { ...item, quantity: Math.max(0, quantity) } : item
+    ).filter(item => 
+      !(item.id == id && item.quantity === 0)
+    );
+    
+    this.cartItems.next(updatedItems);
+    this.saveCart();
   }
 
-  updateQuantity(productId: number, quantity: number): void {
-    const currentItems = this.cartItems.value;
-    const item = currentItems.find(item => item.product.id === productId);
-
-    if (item) {
-      item.quantity = Math.max(0, quantity);
-      if (item.quantity === 0) {
-        this.removeFromCart(productId);
-      } else {
-        this.cartItems.next([...currentItems]);
-      }
-    }
+  removeFromCart(id: number): void {
+    const items = this.cartItems.value;
+    const newItems = items.filter(item => item.id != id);
+    this.cartItems.next(newItems);
+    this.saveCart();
+    this.toastService.show('Removed from cart', 'success');
   }
 
   clearCart(): void {
     this.cartItems.next([]);
+    this.saveCart();
+    this.toastService.show('Cart cleared', 'success');
   }
 
-  isCartSidebarOpen(): Observable<boolean> {
-    return this.isCartOpen.asObservable();
-  }
-
-  toggleCart(): void {
-    this.isCartOpen.next(!this.isCartOpen.value);
+  openCart(): void {
+    this.isCartOpenSubject.next(true);
   }
 
   closeCart(): void {
-    this.isCartOpen.next(false);
+    this.isCartOpenSubject.next(false);
   }
 }

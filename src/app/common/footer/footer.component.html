@@ -1,0 +1,58 @@
+<footer class="footer">
+  <div class="footer-content">
+    <!-- Company Info -->
+    <div class="footer-section">
+      <h3>ShopSmart</h3>
+      <p>Your one-stop destination for all your shopping needs. Quality products, great prices, and excellent service.</p>
+      <div class="social-links">
+        <a *ngFor="let social of socialLinks" 
+           [href]="social.url" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          <i [class]="social.icon"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li *ngFor="let link of quickLinks">
+          <a [routerLink]="link.url">{{ link.text }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Categories -->
+    <div class="footer-section">
+      <h4>Categories</h4>
+      <ul>
+        <li *ngFor="let category of categories">
+          <a [routerLink]="category.url">{{ category.text }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-section">
+      <h4>Stay Updated</h4>
+      <p>Subscribe to our newsletter for the latest updates and exclusive offers.</p>
+      <form class="newsletter-form" (ngSubmit)="$event.preventDefault()">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} ShopSmart. All rights reserved.</p>
+    <div class="payment-methods">
+      <i class="fab fa-cc-visa"></i>
+      <i class="fab fa-cc-mastercard"></i>
+      <i class="fab fa-cc-paypal"></i>
+      <i class="fab fa-cc-amex"></i>
+    </div>
+  </div>
+</footer>
