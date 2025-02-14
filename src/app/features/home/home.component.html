@@ -1,0 +1,72 @@
+<div class="home-container">
+  <!-- Hero Slider Section -->
+  <section class="hero-slider">
+    <div class="slider-container">
+      <div class="slide" *ngFor="let slide of slides" [class.active]="slide.active">
+        <img [src]="slide.image" [alt]="slide.title">
+        <div class="slide-content">
+          <h2>{{slide.title}}</h2>
+          <p>{{slide.subtitle}}</p>
+          <button class="cta-button">Shop Now</button>
+        </div>
+      </div>
+      <div class="slider-navigation">
+        <button class="nav-dot" *ngFor="let slide of slides; let i = index" 
+                [class.active]="slide.active"
+                (click)="currentSlide = i">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+      <p>Find your style in our collections</p>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card" *ngFor="let category of categories">
+        <div class="category-image">
+          <img [src]="category.image" [alt]="category.name">
+        </div>
+        <div class="category-content">
+          <h3>{{category.name}}</h3>
+          <p>{{category.description}}</p>
+          <a [routerLink]="['/categories', category.id]" class="shop-now-link">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending Products Section -->
+  <section class="trending-section">
+    <div class="section-header">
+      <h2>Trending Products</h2>
+      <p>Discover what's popular right now</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let product of trendingProducts">
+        <div class="product-image">
+          <img [src]="product.image" [alt]="product.name">
+          <div class="product-overlay">
+            <button class="wishlist-btn" (click)="addToWishlist(product.id)">
+              <i class="fas fa-heart"></i>
+            </button>
+            <button class="quick-view-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="product-content">
+          <span class="category">{{product.category}}</span>
+          <h3>{{product.name}}</h3>
+          <p class="price">${{product.price}}</p>
+          <button class="add-to-cart-btn" (click)="addToCart(product.id)">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -48,6 +48,48 @@ export class AuthService {
     });
   }
 
+  signup(name: string, email: string, password: string): Promise<boolean> {
+    // Implement actual signup logic here
+    return new Promise((resolve) => {
+      // Simulated successful signup
+      const user: User = {
+        id: 1,
+        name: name,
+        email: email,
+        role: 'user',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', 'dummy_token');
+      this.currentUserSubject.next(user);
+      this.isAuthenticatedSubject.next(true);
+      this.router.navigate(['/']);
+      resolve(true);
+    });
+  }
+
+  forgotPassword(email: string): Promise<boolean> {
+    // Implement actual forgot password logic here
+    return new Promise((resolve) => {
+      // Simulated password reset email sent
+      console.log('Password reset email sent to:', email);
+      this.router.navigate(['/auth/login']);
+      resolve(true);
+    });
+  }
+
+  resetPassword(newPassword: string): Promise<boolean> {
+    // Implement actual password reset logic here
+    return new Promise((resolve) => {
+      // Simulated password reset
+      console.log('Password reset successful');
+      this.router.navigate(['/auth/login']);
+      resolve(true);
+    });
+  }
+
   logout(): void {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
