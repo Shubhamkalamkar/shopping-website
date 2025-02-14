@@ -1,0 +1,127 @@
+<div class="product-listing-container">
+  <!-- Header with filter button -->
+  <div class="header">
+    <h1>Our Products</h1>
+    <button class="filter-button" (click)="toggleFilter()">
+      <i class="fas fa-filter"></i>
+      Filter
+    </button>
+  </div>
+
+  <!-- Product grid -->
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of filteredProducts">
+      <div class="product-image">
+        <img [src]="product.imageUrl" [alt]="product.name">
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <div class="price-container">
+          <span class="original-price" [class.has-discount]="product.discountPrice">
+            ₹{{ product.price }}
+          </span>
+          <span class="discount-price" *ngIf="product.discountPrice">
+            ₹{{ product.discountPrice }}
+          </span>
+          <span class="discount-percentage" *ngIf="product.discountPrice">
+            {{ ((product.price - product.discountPrice) / product.price * 100) | number:'1.0-0' }}% OFF
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter sidebar -->
+  <div class="filter-sidebar" *ngIf="showFilter" [@slideInOut]>
+    <div class="filter-header">
+      <h2>Filters</h2>
+      <button class="close-button" (click)="toggleFilter()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="filter-content">
+      <!-- Categories -->
+      <div class="filter-section">
+        <h3>Categories</h3>
+        <div class="filter-options">
+          <label *ngFor="let category of filterOptions.categories" class="filter-option">
+            <input type="checkbox" 
+                   [checked]="selectedFilters.categories.has(category)"
+                   (change)="toggleFilterItem('categories', category)">
+            {{ category }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="filter-section">
+        <h3>Gender</h3>
+        <div class="filter-options">
+          <label *ngFor="let gender of filterOptions.genders" class="filter-option">
+            <input type="checkbox"
+                   [checked]="selectedFilters.genders.has(gender)"
+                   (change)="toggleFilterItem('genders', gender)">
+            {{ gender | titlecase }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div class="filter-section">
+        <h3>Sizes</h3>
+        <div class="filter-options size-options">
+          <label *ngFor="let size of filterOptions.sizes" class="filter-option size-option">
+            <input type="checkbox"
+                   [checked]="selectedFilters.sizes.has(size)"
+                   (change)="toggleFilterItem('sizes', size)">
+            {{ size }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="filter-section">
+        <h3>Colors</h3>
+        <div class="filter-options color-options">
+          <label *ngFor="let color of filterOptions.colors" class="filter-option color-option">
+            <input type="checkbox"
+                   [checked]="selectedFilters.colors.has(color)"
+                   (change)="toggleFilterItem('colors', color)">
+            {{ color }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Patterns -->
+      <div class="filter-section">
+        <h3>Patterns</h3>
+        <div class="filter-options">
+          <label *ngFor="let pattern of filterOptions.patterns" class="filter-option">
+            <input type="checkbox"
+                   [checked]="selectedFilters.patterns.has(pattern)"
+                   (change)="toggleFilterItem('patterns', pattern)">
+            {{ pattern }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Brands -->
+      <div class="filter-section">
+        <h3>Brands</h3>
+        <div class="filter-options">
+          <label *ngFor="let brand of filterOptions.brands" class="filter-option">
+            <input type="checkbox"
+                   [checked]="selectedFilters.brands.has(brand)"
+                   (change)="toggleFilterItem('brands', brand)">
+            {{ brand }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-footer">
+      <button class="clear-filters" (click)="clearFilters()">Clear All</button>
+    </div>
+  </div>
+</div>
