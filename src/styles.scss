@@ -1,4 +1,254 @@
-/* You can add global styles to this file, and also import other style files */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$custom-primary-palette: (
+  50: #31a6c0,
+  100: #31a6c0,
+  200: #31a6c0,
+  300: #31a6c0,
+  400: #31a6c0,
+  500: #31a6c0,
+  600: #31a6c0,
+  700: #31a6c0,
+  800: #31a6c0,
+  900: #31a6c0,
+  A100: #31a6c0,
+  A200: #31a6c0,
+  A400: #31a6c0,
+  A700: #31a6c0,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #ffffff,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff,
+  ),
+);
+$custom-accent-palette: (
+  50: #2c3133,
+  100: #2c3133,
+  200: #2c3133,
+  300: #2c3133,
+  400: #2c3133,
+  500: #2c3133,
+  600: #2c3133,
+  700: #2c3133,
+  800: #2c3133,
+  900: #2c3133,
+  A100: #2c3133,
+  A200: #2c3133,
+  A400: #2c3133,
+  A700: #2c3133,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #ffffff,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff,
+  ),
+);
+$custom-primary-palette-dark: (
+  50: #004552,
+  100: #004552,
+  200: #004552,
+  300: #004552,
+  400: #004552,
+  500: #004552,
+  600: #004552,
+  700: #004552,
+  800: #004552,
+  900: #004552,
+  A100: #004552,
+  A200: #004552,
+  A400: #004552,
+  A700: #004552,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #ffffff,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff,
+  ),
+);
+$custom-accent-palette-dark: (
+  50: #0082a7,
+  100: #0082a7,
+  200: #0082a7,
+  300: #0082a7,
+  400: #0082a7,
+  500: #0082a7,
+  600: #0082a7,
+  700: #0082a7,
+  800: #0082a7,
+  900: #0082a7,
+  A100: #0082a7,
+  A200: #0082a7,
+  A400: #0082a7,
+  A700: #0082a7,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #ffffff,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff,
+  ),
+);
+
+$shopping-management-portal-primary: mat.define-palette($custom-primary-palette);
+$shopping-management-portal-accent: mat.define-palette($custom-accent-palette);
+$shopping-management-portal-primary-dark: mat.define-palette(
+  $custom-primary-palette-dark
+);
+$shopping-management-portal-accent-dark: mat.define-palette(
+  $custom-accent-palette-dark
+);
+$mat-grey-palette: mat.define-palette(mat.$grey-palette);
+
+// Define contrast colors for the grey palette (optional)
+// $mat-grey-contrast: mat.define-contrast-palette($mat-grey-palette);
+// The warn palette is optional (defaults to red).
+$shopping-management-portal-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$shopping-management-portal-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $shopping-management-portal-primary,
+      accent: $shopping-management-portal-accent,
+      warn: $shopping-management-portal-warn,
+    ),
+    typography:
+      mat.define-typography-config(
+        $font-family:
+          'ui-sans-serif,system-ui,sans-serif,Segoe UI Symbol',
+      ),
+    density: 0,
+  )
+);
+$shopping-management-portal-theme-dark: mat.define-dark-theme(
+  (
+    color: (
+      primary: $shopping-management-portal-primary-dark,
+      accent: $shopping-management-portal-accent-dark,
+      warn: $shopping-management-portal-warn,
+    ), 
+    typography:
+      mat.define-typography-config(
+        $font-family:
+          'ui-sans-serif,system-ui,sans-serif,Segoe UI Symbol',
+      ),
+    density: 0,
+  )
+);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($shopping-management-portal-theme);
+.dark {
+  @include mat.all-component-colors($shopping-management-portal-theme-dark);
+}
+
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/scss/form-control.scss";
+@import "./assets/scss/button.scss";
+@import './assets/scss/form-heading.scss';
+:root {
+  --primary-color: #31a6c0; /* Default primary color */
+  --secondary-color: #016482;
+  --tertiary-color: #2c3133;
+  // --tertiary-color: #4c4c4c;
+  --selective-white-color: #ffffff;
+  --selective-text-color: #ffffff;
+  --primary-dark: #004552;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  // font-family: 'ui-sans-serif,system-ui,sans-serif,Segoe UI Symbol' !important;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'sans-serif', system-ui,;
+}
+
+.mat-expansion-panel-header {
+  padding: 0px 12px !important;
+}
+.mat-expansion-panel-body {
+  padding: 0px 12px 12px !important;
+}
+
+.month-year-datepicker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.month-year-datepicker .mat-calendar-arrow {
+  display: none;
+}
+.snackBarClass {
+  .mdc-snackbar__label {
+    font-size: 1.2rem !important;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
