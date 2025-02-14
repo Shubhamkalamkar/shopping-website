@@ -1,0 +1,144 @@
+.product-card {
+  width: 280px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .image-container {
+    position: relative;
+    aspect-ratio: 1;
+    background: #f5f5f5;
+    overflow: hidden;
+
+    .product-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+
+      &.hover-image {
+        z-index: 1;
+        opacity: 0;
+
+        &.fade-in {
+          opacity: 1;
+        }
+      }
+
+      &.fade-out {
+        opacity: 0;
+      }
+    }
+
+    .like-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+
+      i {
+        color: #666;
+        font-size: 18px;
+        transition: color 0.2s ease;
+      }
+
+      &.liked i {
+        color: #ff4d4d;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .product-info {
+    padding: 16px;
+
+    .product-title {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .price-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+
+      .price-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .current-price {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #333;
+        }
+
+        .original-price {
+          font-size: 0.9rem;
+          color: #999;
+          text-decoration: line-through;
+        }
+      }
+
+      .discount-badge {
+        background: #ff4d4d;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+    }
+
+    .add-to-cart-button {
+      width: 100%;
+      padding: 12px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      i {
+        font-size: 1.1rem;
+      }
+
+      &:hover {
+        background: #357abd;
+      }
+    }
+  }
+}

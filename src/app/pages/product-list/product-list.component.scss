@@ -1,0 +1,23 @@
+.product-list-container {
+  padding: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  background: #f8f9fa;
+}
+
+.products-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-items: center;
+}
+
+@media (max-width: 480px) {
+  .product-list-container {
+    padding: 16px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}

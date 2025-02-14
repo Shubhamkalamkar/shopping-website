@@ -1,0 +1,13 @@
+<div class="product-list-container">
+    <div class="products-grid">
+      <app-product-card
+        *ngFor="let product of products"
+        [primaryImage]="product.primaryImage"
+        [hoverImage]="product.hoverImage"
+        [title]="product.title"
+        [price]="product.price"
+        [discountPrice]="product.discountPrice"
+        [discount]="product.discount"
+      ></app-product-card>
+    </div>
+  </div>

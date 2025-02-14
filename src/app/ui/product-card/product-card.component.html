@@ -1,0 +1,27 @@
+<div class="product-card" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false">
+  <div class="image-container">
+    <img [src]="primaryImage" [alt]="title" class="product-image" [class.fade-out]="isHovered && hoverImage">
+    <img *ngIf="hoverImage" [src]="hoverImage" [alt]="title" class="product-image hover-image" [class.fade-in]="isHovered">
+    <button class="like-button" [class.liked]="isLiked" (click)="toggleLike()">
+      <i class="fa fa-heart"></i>
+    </button>
+  </div>
+  
+  <div class="product-info">
+    <h3 class="product-title">{{ title }}</h3>
+    <div class="price-container">
+      <div class="price-info">
+        <span class="current-price">₹{{ discountPrice || price }}</span>
+        <span class="original-price" *ngIf="discountPrice">₹{{ price }}</span>
+      </div>
+      <span class="discount-badge" *ngIf="discountPercentage > 0">
+        -{{ discountPercentage }}%
+      </span>
+    </div>
+    
+    <button class="add-to-cart-button">
+      <i class="fa fa-shopping-cart"></i>
+      Add to Cart
+    </button>
+  </div>
+</div>
