@@ -1,3 +1,85 @@
-<div>menu</div>
-<div>VASTRADO</div>
-<div>Login</div>
+<header class="header">
+  <nav class="nav-container">
+    <div class="logo-container">
+      <a routerLink="/" class="logo">
+        <img src="/logo.jpg" alt="ShopStyle Logo" class="logo-image">
+      </a>
+    </div>
+
+    <div class="nav-links">
+      <a routerLink="/products" routerLinkActive="active" class="nav-link">
+        <i class="fas fa-store"></i>
+        <span>Shop</span>
+      </a>
+      <a routerLink="/categories" routerLinkActive="active" class="nav-link">
+        <i class="fas fa-th-large"></i>
+        <span>Categories</span>
+      </a>
+      <a routerLink="/deals" routerLinkActive="active" class="nav-link">
+        <i class="fas fa-tag"></i>
+        <span>Deals</span>
+      </a>
+      <a routerLink="/new-arrivals" routerLinkActive="active" class="nav-link">
+        <i class="fas fa-star"></i>
+        <span>New Arrivals</span>
+      </a>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search products..." class="search-input">
+      </div>
+    </div>
+
+    <div class="user-actions">
+      <button class="action-btn wishlist-btn" routerLink="/wishlist">
+        <i class="fas fa-heart"></i>
+        <span class="count" *ngIf="wishlistItemCount > 0">{{ wishlistItemCount }}</span>
+      </button>
+
+      <button class="action-btn cart-btn" (click)="openCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+      </button>
+
+      <div class="user-menu" *ngIf="currentUser$ | async as currentUser; else loginButton" 
+           (clickOutside)="onClickOutside()">
+        <button class="user-btn" (click)="toggleUserMenu()">
+          <i class="fas fa-user-circle"></i>
+          <span>{{ currentUser.name }}</span>
+        </button>
+        <div class="dropdown-menu" [class.show]="isUserMenuOpen">
+          <a routerLink="/profile" class="dropdown-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+          <a routerLink="/orders" class="dropdown-item">
+            <i class="fas fa-box"></i>
+            <span>Orders</span>
+          </a>
+          <a routerLink="/returns" class="dropdown-item">
+            <i class="fas fa-undo"></i>
+            <span>Returns</span>
+          </a>
+          <a routerLink="/settings" class="dropdown-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+
+      <ng-template #loginButton>
+        <button class="login-btn" routerLink="/auth/login">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </button>
+      </ng-template>
+    </div>
+  </nav>
+</header>

@@ -1,6 +1,159 @@
-:host{
+.header {
+  width: 100%;
+  background-color: #f5f5dc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Garamond, serif;
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
     display: flex;
-    background-color: red;
-    height: 60px;
+    align-items: center;
     justify-content: space-between;
+
+    .logo-container {
+      .logo {
+        display: block;
+        .logo-image {
+          height: 40px;
+          width: auto;
+        }
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      
+      .nav-link {
+        color: #4a4a4a;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+
+        &:hover, &.active {
+          color: #8b4513;
+        }
+
+        i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .search-container {
+      flex: 0 1 300px;
+      
+      .search-box {
+        position: relative;
+        
+        .search-icon {
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #8b4513;
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 0.5rem 0.5rem 0.5rem 2rem;
+          border: 1px solid #d4d4d4;
+          border-radius: 20px;
+          font-family: Garamond, serif;
+          
+          &:focus {
+            outline: none;
+            border-color: #8b4513;
+          }
+        }
+      }
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .action-btn, .user-btn, .login-btn {
+        background: none;
+        border: none;
+        color: #4a4a4a;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: Garamond, serif;
+        position: relative;
+
+        &:hover {
+          color: #8b4513;
+        }
+
+        .count {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: #8b4513;
+          color: white;
+          border-radius: 50%;
+          padding: 0.2rem 0.5rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      .user-menu {
+        position: relative;
+
+        .dropdown-menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: white;
+          border-radius: 4px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          min-width: 200px;
+          z-index: 1000;
+
+          &.show {
+            display: block;
+          }
+
+          .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #4a4a4a;
+            text-decoration: none;
+            transition: background-color 0.3s;
+
+            &:hover {
+              background-color: #f5f5dc;
+              color: #8b4513;
+            }
+
+            &.logout {
+              color: #dc3545;
+              
+              &:hover {
+                background-color: #fff5f5;
+              }
+            }
+          }
+
+          .dropdown-divider {
+            height: 1px;
+            background-color: #e9ecef;
+            margin: 0.5rem 0;
+          }
+        }
+      }
+    }
+  }
 }
