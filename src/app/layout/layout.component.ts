@@ -6,6 +6,7 @@ import { LoaderService } from '../ui/loader/loader.service';
 import { LoadingComponent } from '../ui/loader/loading.component';
 import { SwitchThemeService } from '../ui/theme/switch-theme.service';
 import { CommonModule } from '@angular/common';
+import { CartSidebarComponent } from '../pages/cart-sidebar/cart-sidebar.component';
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     HeaderComponent,
     NgClass,
+    CartSidebarComponent
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
