@@ -1,0 +1,46 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <button class="close-btn" (click)="onClose()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-content">
+    <nav class="categories">
+      <div *ngFor="let category of categories" class="category">
+        <div class="category-header" (click)="toggleCategory(category)">
+          <span>{{category.name}}</span>
+          <i class="fas" [ngClass]="category.isOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+        <div class="subcategories" *ngIf="category.isOpen">
+          <a *ngFor="let sub of category.subcategories" class="subcategory">
+            {{sub}}
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="account-section">
+      <div class="account-info">
+        <i class="fas fa-user"></i>
+        <span>{{userName}}</span>
+      </div>
+      
+      <div class="region-selector">
+        <div class="country">
+          <span>Country/region</span>
+          <div class="selected-country">
+            <span>Shipping: {{selectedCountry}} / {{currency}}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="accessibility">
+        <span>Essential Accessibility</span>
+      </div>
+    </div>
+  </div>
+</div>

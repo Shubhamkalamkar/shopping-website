@@ -1,4 +1,29 @@
-<div>menu</div>
-<div>VASTRADO</div>
-<app-switch-theme></app-switch-theme>
-<div>Login</div>
+<header class="header">
+  <div class="header-left">
+    <button class="menu-btn" (click)="onMenuClicked()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class="header-center">
+    <a href="/" class="logo">VASTRADO</a>
+  </div>
+
+  <div class="header-right">
+    <div class="country-selector" (click)="toggleCountryPopup()">
+      <span>Shipping: {{selectedCountry.name}} / {{selectedCountry.currency}}</span>
+      <i class="fas fa-chevron-down"></i>
+
+      <div class="country-popup" *ngIf="isCountryPopupOpen">
+        <div class="country-list">
+          <div class="country-item" *ngFor="let country of countries" (click)="selectCountry(country)">
+            <span>{{country.name}} ({{country.currency}})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-switch-theme></app-switch-theme>
+    <div>Login</div>
+  </div>
+</header>

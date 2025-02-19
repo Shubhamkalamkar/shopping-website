@@ -8,7 +8,7 @@ import { SwitchThemeService } from './ui/theme/switch-theme.service';
   standalone: true,
   imports: [RouterOutlet, MatSnackBarModule, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'shopping-management-portal';
@@ -48,15 +48,15 @@ export class AppComponent {
           document.body.classList.remove('dark');
           document.documentElement.style.setProperty(
             '--primary-color',
-            '#31a6c0'
+            '#016375'
           );
           document.documentElement.style.setProperty(
             '--secondary-color',
-            '#016482'
+            '#004552'
           );
           document.documentElement.style.setProperty(
             '--tertiary-color',
-            '#2c3133'
+            '#92e5fc'
           );
           document.documentElement.style.setProperty(
             '--selective-whtie-color',
@@ -64,11 +64,11 @@ export class AppComponent {
           );
           document.documentElement.style.setProperty(
             '--selective-text-color',
-            '#232629'
+            '#000000'
           );
           document.documentElement.style.setProperty(
             '--primary-dark',
-            '#004552'
+            '#ffffff'
           );
         }
       })
