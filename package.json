@@ -4,7 +4,13 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
+<<<<<<< HEAD
     "test": "ng test"
+=======
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "go" : "ng serve --host 0.0.0.0 -o"
+>>>>>>> c82cafe065dcad2bc473ad66cb6fea03b43bbb2e
   },
   "private": true,
   "dependencies": {
