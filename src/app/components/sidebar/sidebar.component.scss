@@ -11,17 +11,19 @@
   animation: slideIn 0.3s ease;
 
   .sidebar-header {
-    padding: 20px;
+    padding: 14px;
     display: flex;
     justify-content: flex-end;
+    border-bottom: 1px solid #f0f0f0;
 
     .close-btn {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 20px;
       cursor: pointer;
       color: #333;
-      padding: 5px;
+      padding: 4px;
+      transition: all 0.2s ease;
 
       &:hover {
         color: #000;
@@ -32,43 +34,57 @@
   .sidebar-content {
     flex: 1;
     overflow-y: auto;
-    padding: 20px 0;
+    padding: 12px 0;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ddd;
+      border-radius: 2px;
+    }
 
     .categories {
       .category {
-        margin-bottom: 10px;
+        margin-bottom: 2px;
 
         .category-header {
-          padding: 15px 30px;
+          padding: 10px 20px;
           display: flex;
           justify-content: space-between;
           align-items: center;
           cursor: pointer;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 500;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
+          color: #333;
 
           &:hover {
-            background-color: #f8f8f8;
+            color: #000;
           }
 
           i {
-            font-size: 12px;
-            transition: transform 0.3s ease;
+            font-size: 10px;
+            transition: transform 0.2s ease;
           }
         }
 
         .subcategories {
-          padding-left: 45px;
-          animation: fadeIn 0.3s ease;
+          padding-left: 35px;
+          animation: fadeIn 0.2s ease;
           
           .subcategory {
             display: block;
-            padding: 12px 0;
+            padding: 6px 0;
             color: #666;
             text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
+            font-size: 13px;
+            transition: color 0.2s ease;
 
             &:hover {
               color: #000;
@@ -80,46 +96,125 @@
   }
 
   .sidebar-footer {
-    padding: 20px 30px;
+    padding: 12px 20px;
+    border-top: 1px solid #f0f0f0;
 
     .account-section {
       .account-info {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
+        gap: 8px;
+        margin-bottom: 12px;
+        padding: 4px 0;
+        cursor: pointer;
         
         i {
-          font-size: 20px;
+          font-size: 16px;
+          color: #444;
+        }
+
+        span {
+          font-size: 13px;
+          font-weight: 500;
+          color: #333;
         }
       }
 
       .region-selector {
-        margin-bottom: 20px;
+        position: relative;
+        margin-bottom: 12px;
 
         .country {
-          span {
-            display: block;
-            color: #666;
-            margin-bottom: 8px;
-          }
+          cursor: pointer;
 
           .selected-country {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            
+            padding: 4px 0;
+            font-size: 13px;
+            color: #333;
+            transition: color 0.2s ease;
+
+            i {
+              font-size: 10px;
+              color: #666;
+              margin-left: 4px;
+            }
+
             &:hover {
               color: #000;
+              i {
+                color: #000;
+              }
+            }
+          }
+        }
+
+        .country-popup {
+          position: absolute;
+          bottom: 100%;
+          left: 0;
+          right: 0;
+          background: white;
+          border: 1px solid #f0f0f0;
+          border-radius: 4px;
+          margin-bottom: 4px;
+          z-index: 1000;
+          animation: slideUpFade 0.2s ease;
+
+          .popup-content {
+            max-height: 200px;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+              width: 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+              background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: #ddd;
+              border-radius: 2px;
+            }
+
+            .country-option {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 8px 12px;
+              cursor: pointer;
+              transition: background-color 0.2s ease;
+              font-size: 13px;
+
+              &:hover {
+                background-color: #f8f8f8;
+              }
+
+              .currency {
+                color: #666;
+                font-size: 12px;
+              }
             }
           }
         }
       }
 
       .accessibility {
-        color: #666;
-        font-size: 14px;
+        padding: 4px 0;
+        cursor: pointer;
+
+        span {
+          font-size: 12px;
+          color: #666;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: #000;
+          }
+        }
       }
     }
   }
@@ -137,7 +232,16 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
     opacity: 1;

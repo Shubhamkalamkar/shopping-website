@@ -29,11 +29,22 @@
       </div>
       
       <div class="region-selector">
-        <div class="country">
-          <span>Country/region</span>
-          <div class="selected-country">
-            <span>Shipping: {{selectedCountry}} / {{currency}}</span>
+        <div class="country" (click)="toggleCountryPopup()">
+          <span class="selected-country">
+            {{selectedCountry}} / {{currency}}
             <i class="fas fa-chevron-down"></i>
+          </span>
+        </div>
+
+        <!-- Country Selection Popup -->
+        <div class="country-popup" *ngIf="isCountryPopupOpen">
+          <div class="popup-content">
+            <div *ngFor="let country of countries" 
+                 class="country-option" 
+                 (click)="selectCountry(country)">
+              <span>{{country.name}}</span>
+              <span class="currency">{{country.currency}}</span>
+            </div>
           </div>
         </div>
       </div>
