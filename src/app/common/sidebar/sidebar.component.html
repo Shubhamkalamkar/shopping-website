@@ -1,0 +1,30 @@
+<div class="sidebar" [@sidebarState]="getAnimationState()">
+  <div class="sidebar-header">
+    <h2>MENU</h2>
+    <button class="close-btn" (click)="toggleSidebar()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="sidebar-content">
+    <ul class="category-list">
+      <li *ngFor="let category of categories" 
+          class="category-item" 
+          (click)="navigateToCategory(category.id)">
+        <mat-icon>{{category.icon}}</mat-icon>
+        {{category.name}}
+      </li>
+    </ul>
+  </div>
+
+  <div class="account-section">
+    <button class="account-btn" routerLink="/account">
+      <mat-icon>person_outline</mat-icon>
+      ACCOUNT
+    </button>
+  </div>
+</div>
+
+<div class="sidebar-overlay" 
+     [class.show]="isOpen" 
+     (click)="toggleSidebar()"></div>

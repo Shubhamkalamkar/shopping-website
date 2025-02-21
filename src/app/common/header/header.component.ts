@@ -5,12 +5,15 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
+import { SidebarService } from '../../services/sidebar.service';
 import { User } from '../../models/user.model';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -19,11 +22,13 @@ export class HeaderComponent implements OnInit {
   cartItemCount: number = 0;
   wishlistItemCount: number = 0;
   isUserMenuOpen: boolean = false;
+  isMobileMenuOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private sidebarService: SidebarService
   ) {
     this.currentUser$ = this.authService.currentUser$;
   }
@@ -42,8 +47,13 @@ export class HeaderComponent implements OnInit {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
+  toggleMobileMenu(): void {
+    this.sidebarService.toggleSidebar();
+  }
+
   onClickOutside(): void {
     this.isUserMenuOpen = false;
+    this.isMobileMenuOpen = false;
   }
 
   openCart(): void {
