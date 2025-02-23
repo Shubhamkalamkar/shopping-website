@@ -1,0 +1,60 @@
+<footer class="footer">
+  <div class="footer-top">
+    <div class="newsletter-section">
+      <h2>BE THE FIRST TO ACCESS AMIRI LAUNCHES AND EVENTS. GDPR COMPLIANT</h2>
+      <form (ngSubmit)="onSubmit()" class="newsletter-form">
+        <input type="email" [(ngModel)]="email" name="email" placeholder="YOUR EMAIL*" required>
+        <button type="submit">SIGN UP</button>
+      </form>
+      <div class="location-info">
+        <span>LOCATION: INDIA</span>
+        <button class="cookies-btn">COOKIES SETTINGS</button>
+      </div>
+      <div class="notify-section">
+        <span>DON'T SEE YOUR COUNTRY? SIGNUP TO RECEIVE UPDATES WHEN IT'S AVAILABLE.</span>
+        <button class="notify-btn">NOTIFY ME</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>ABOUT AMIRI</h3>
+      <ul>
+        <li><a routerLink="/retail-locations">RETAIL LOCATIONS</a></li>
+        <li><a routerLink="/store-locator">STORE LOCATOR</a></li>
+        <li><a routerLink="/stockists">STOCKISTS</a></li>
+        <li><a routerLink="/careers">CAREERS</a></li>
+        <li><a routerLink="/tmall">TMALL</a></li>
+        <li><a routerLink="/amiri-prize">AMIRI PRIZE</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>CLIENT SERVICES</h3>
+      <ul>
+        <li><a routerLink="/holiday-faq">HOLIDAY FAQ</a></li>
+        <li><a routerLink="/shipping-returns">SHIPPING & RETURNS</a></li>
+        <li><a routerLink="/us-returns">US RETURNS</a></li>
+        <li><a routerLink="/international-returns">INTERNATIONAL RETURNS</a></li>
+        <li><a routerLink="/terms">TERMS OF USE</a></li>
+        <li><a routerLink="/privacy">PRIVACY POLICY</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>CONNECT</h3>
+      <ul>
+        <li><a routerLink="/contact">CONTACT</a></li>
+        <li><a href="https://facebook.com/amiri" target="_blank">FACEBOOK</a></li>
+        <li><a href="https://instagram.com/amiri" target="_blank">INSTAGRAM</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="logo">
+      <img src="/logo.jpg" alt="AMIRI" class="footer-logo">
+    </div>
+  </div>
+</footer>

@@ -7,6 +7,20 @@
   </div>
   
   <div class="sidebar-content">
+    <div class="mobile-user-actions">
+      <button mat-icon-button class="action-btn">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-icon-button class="action-btn" routerLink="/account">
+        <mat-icon>person_outline</mat-icon>
+      </button>
+      <button mat-icon-button class="action-btn" routerLink="/wishlist">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+      <button mat-icon-button class="action-btn" routerLink="/cart">
+        <mat-icon>shopping_bag</mat-icon>
+      </button>
+    </div>
     <ul class="category-list">
       <li *ngFor="let category of categories" 
           class="category-item" 
@@ -25,6 +39,4 @@
   </div>
 </div>
 
-<div class="sidebar-overlay" 
-     [class.show]="isOpen" 
-     (click)="toggleSidebar()"></div>
+<div class="sidebar-overlay" [class.show]="isOpen" (click)="toggleSidebar()"></div>
