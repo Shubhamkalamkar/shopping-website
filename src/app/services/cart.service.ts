@@ -9,6 +9,11 @@ interface Product {
   providedIn: 'root'
 })
 export class CartService {
+  private cartItems: Set<string> = new Set();
+
+  isInCart(productId: string): boolean {
+    return this.cartItems.has(productId);
+  }
   private cartItemsSubject = new BehaviorSubject<Product[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
 

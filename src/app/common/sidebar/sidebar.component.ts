@@ -48,6 +48,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     { id: 'men', name: 'MEN', icon: 'person', description: 'Shop Men\'s Collection', comingSoon: false },
     { id: 'women', name: 'WOMEN', icon: 'person_outline', description: 'Shop Women\'s Collection', comingSoon: false },
     { id: 'kids', name: 'KIDS', icon: 'child_care', description: 'Shop Kids\' Collection', comingSoon: false },
+    { id: 'accessories', name: 'ACCESSORIES', icon: 'watch', description: 'Shop Accessories Collection', comingSoon: false },
+    { id: 'gifting', name: 'GIFTING', icon: 'card_giftcard', description: 'Shop Gifting Collection', comingSoon: false },
     { id: 'footwear', name: 'FOOTWEAR', icon: 'hiking', description: 'Shop Footwear Collection', comingSoon: false },
     { id: 'accessories', name: 'ACCESSORIES', icon: 'diamond', description: 'Shop Accessories', comingSoon: false },
     { id: 'gifting', name: 'GIFTING', icon: 'card_giftcard', description: 'Shop Gift Items', comingSoon: false }
@@ -88,7 +90,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   navigateToCategory(category: string) {
     if (!this.categories.find(c => c.id === category)?.comingSoon) {
-      this.router.navigate(['/category', category]);
+      this.router.navigate(['/products', category]);
       this.sidebarService.closeSidebar();
     }
   }

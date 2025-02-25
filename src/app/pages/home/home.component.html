@@ -1,6 +1,14 @@
 <!-- Hero Slider Section -->
-<div class="hero-slider">
+<div class="hero-slider" (mouseenter)="onSlideMouseEnter()" (mouseleave)="onSlideMouseLeave()">
   <div class="slides">
+    <button class="slider-nav prev" (click)="prevSlide()">&lt;</button>
+    <button class="slider-nav next" (click)="nextSlide()">&gt;</button>
+    <div class="slider-dots">
+      <button *ngFor="let _ of [].constructor(totalSlides); let i = index" 
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)">
+      </button>
+    </div>
     <div class="slide">
       <img src="https://images.pexels.com/photos/5868722/pexels-photo-5868722.jpeg" alt="Summer Collection">
       <div class="slide-content">

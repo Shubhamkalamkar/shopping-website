@@ -1,0 +1,102 @@
+<div class="product-page">
+  <div class="page-header">
+    <h1>{{ pageTitle }}</h1>
+    <div class="header-actions">
+      <button mat-button class="filter-toggle" (click)="toggleFilterSidebar()">
+        <mat-icon>filter_list</mat-icon>
+        Filters
+      </button>
+      <button mat-button class="clear-filters" (click)="clearFilters()" *ngIf="currentFilter">
+        <mat-icon>clear_all</mat-icon>
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <!-- Filter Sidebar -->
+    <div class="filter-sidebar" [class.open]="isFilterSidebarOpen">
+      <div class="filter-header">
+        <h2>Filters</h2>
+        <button mat-icon-button (click)="toggleFilterSidebar()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="filter-content">
+        <!-- Size Filter -->
+        <div class="filter-section">
+          <h3>Size</h3>
+          <mat-chip-listbox multiple>
+            <mat-chip-option *ngFor="let size of ['XS', 'S', 'M', 'L', 'XL']"
+                      [selected]="currentFilter.sizes?.includes(size)"
+                      (selectionChange)="applyFilters({sizes: [size]})">
+              {{ size }}
+            </mat-chip-option>
+          </mat-chip-listbox>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="filter-section">
+          <h3>Price Range</h3>
+          <mat-slider min="0" max="1000" step="10" discrete>
+            <input matSliderThumb
+                   [(ngModel)]="currentFilter.minPrice"
+                   (valueChange)="applyFilters({minPrice: currentFilter.minPrice})">
+            <input matSliderThumb
+                   [(ngModel)]="currentFilter.maxPrice"
+                   (valueChange)="applyFilters({maxPrice: currentFilter.maxPrice})">
+          </mat-slider>
+          <div class="price-range">
+            <span>${{ currentFilter.minPrice || 0 }}</span>
+            <span>${{ currentFilter.maxPrice || 1000 }}</span>
+          </div>
+        </div>
+
+        <!-- Sort By -->
+        <div class="filter-section">
+          <h3>Sort By</h3>
+          <mat-radio-group [(ngModel)]="currentFilter.sortBy"
+                          (change)="applyFilters({sortBy: currentFilter.sortBy})">
+            <mat-radio-button value="price-low-high">Price: Low to High</mat-radio-button>
+            <mat-radio-button value="price-high-low">Price: High to Low</mat-radio-button>
+            <mat-radio-button value="newest">Newest</mat-radio-button>
+            <mat-radio-button value="popular">Popular</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <button mat-button color="warn" (click)="clearFilters()">Clear All Filters</button>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid">
+      <div class="product-card" *ngFor="let product of products$ | async">
+        <div class="product-image">
+          <img [src]="product.images[0]" [alt]="product.name">
+          <div class="product-actions">
+            <button mat-icon-button (click)="addToWishlist(product)">
+              <mat-icon [class.active]="isInWishlist(product)">favorite</mat-icon>
+            </button>
+            <button mat-icon-button (click)="addToCart(product)">
+              <mat-icon [class.active]="isInCart(product)">shopping_cart</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+          <p class="price">
+            ${{ product.price }}
+            <span class="discount" *ngIf="product.discount">
+              -{{ product.discount }}%
+            </span>
+          </p>
+          <div class="rating" *ngIf="product.rating">
+            <mat-icon>star</mat-icon>
+            <span>{{ product.rating }} ({{ product.reviews }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
