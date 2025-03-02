@@ -1,15 +1,18 @@
 .header {
   width: 100%;
-  background-color: #F5E5CE;
+  background-color: rgba(245, 229, 206, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: none;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid rgba(224, 224, 224, 0.3);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1002;
   height: 70px;
-  overflow: hidden;
+  overflow: visible;
+  transition: background-color 0.3s ease;
   
   a{
     text-decoration: none;
@@ -60,6 +63,7 @@
       padding: 0;
       letter-spacing: 1px;
       white-space: nowrap;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
     }
   }
 
