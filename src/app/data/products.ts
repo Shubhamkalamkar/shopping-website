@@ -1,49 +1,94 @@
-import { Product } from '../models/product.model';
+import { Product } from '../models/product-page.model';
 
 export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'w1',
     name: 'Floral Summer Dress',
-    description: 'A beautiful floral print dress perfect for summer days',
+    description: 'A beautiful floral print dress perfect for summer days. Made from lightweight, breathable fabric with a flattering A-line silhouette.',
     price: 79.99,
-    imageUrl: 'assets/images/women/floral-dress.jpg',
+    images: ['assets/images/women/floral-dress.jpg'],
     category: 'women',
-    inStock: true
+    subCategory: 'dresses',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Blue', 'Pink', 'White'],
+    inStock: true,
+    rating: 4.5,
+    reviews: 128,
+    isNew: true,
+    isFeatured: true
   },
   {
     id: 'w2',
     name: 'Classic Denim Jacket',
-    description: 'Versatile denim jacket that goes with everything',
+    description: 'Versatile denim jacket that goes with everything. Features premium quality denim with a slightly distressed finish.',
     price: 89.99,
-    imageUrl: 'assets/images/women/denim-jacket.jpg',
+    images: ['assets/images/women/denim-jacket.jpg'],
     category: 'women',
-    inStock: true
+    subCategory: 'outerwear',
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: ['Light Blue', 'Dark Blue'],
+    inStock: true,
+    rating: 4.8,
+    reviews: 95,
+    discount: 15
   },
   {
     id: 'w3',
     name: 'High-Waist Slim Jeans',
-    description: 'Comfortable high-waist jeans with perfect fit',
+    description: 'Comfortable high-waist jeans with perfect fit. Made with stretch denim for maximum comfort and mobility.',
     price: 69.99,
-    imageUrl: 'assets/images/women/slim-jeans.jpg',
+    images: ['assets/images/women/slim-jeans.jpg'],
     category: 'women',
-    inStock: true
+    subCategory: 'pants',
+    sizes: ['2', '4', '6', '8', '10', '12'],
+    colors: ['Indigo', 'Black', 'Light Wash'],
+    inStock: true,
+    rating: 4.6,
+    reviews: 156,
+    isFeatured: true
   },
   {
     id: 'w4',
     name: 'Silk Blouse',
-    description: 'Elegant silk blouse for professional and casual wear',
+    description: 'Elegant silk blouse for professional and casual wear. Features a luxurious silk blend fabric with a relaxed fit.',
     price: 59.99,
-    imageUrl: 'assets/images/women/silk-blouse.jpg',
+    images: ['assets/images/women/silk-blouse.jpg'],
     category: 'women',
-    inStock: true
+    subCategory: 'tops',
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: ['White', 'Black', 'Blush Pink'],
+    inStock: true,
+    rating: 4.3,
+    reviews: 82
   },
   {
     id: 'w5',
     name: 'Knit Sweater',
-    description: 'Cozy knit sweater for chilly days',
+    description: 'Cozy knit sweater for chilly days. Made from a soft wool blend with a contemporary oversized fit.',
     price: 49.99,
-    imageUrl: 'assets/images/women/knit-sweater.jpg',
+    images: ['assets/images/women/knit-sweater.jpg'],
     category: 'women',
-    inStock: true
+    subCategory: 'sweaters',
+    sizes: ['S', 'M', 'L'],
+    colors: ['Cream', 'Gray', 'Navy'],
+    inStock: true,
+    rating: 4.7,
+    reviews: 73,
+    discount: 20
+  },
+  {
+    id: 'w6',
+    name: 'Pleated Midi Skirt',
+    description: 'Elegant pleated midi skirt with a flowing silhouette. Perfect for both office and special occasions.',
+    price: 65.99,
+    images: ['assets/images/women/pleated-skirt.jpg'],
+    category: 'women',
+    subCategory: 'skirts',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Black', 'Navy', 'Burgundy'],
+    inStock: true,
+    rating: 4.4,
+    reviews: 45,
+    isNew: true
   }
 ];

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { womenProducts } from '../../../data/women-products';
 import { ProductPageComponent } from '../product-page.component';
 import { ProductService } from '../../../services/product.service';
 import { WishlistService } from '../../../services/wishlist.service';
@@ -35,5 +36,6 @@ export class WomenProductComponent extends ProductPageComponent {
     super(productService, wishlistService, cartService, snackBar);
     this.pageTitle = 'Women\'s Collection';
     this.category = 'women';
+    productService.setProducts(womenProducts);
   }
 }

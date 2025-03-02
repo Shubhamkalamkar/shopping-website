@@ -261,20 +261,24 @@
     gap: 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    padding: 0 1rem;
 
     @media (max-width: 1200px) {
       grid-template-columns: repeat(3, 1fr);
+      max-width: 1000px;
     }
 
     @media (max-width: 992px) {
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
+      max-width: 768px;
     }
 
     @media (max-width: 576px) {
       grid-template-columns: 1fr;
       gap: 1.5rem;
       max-width: 400px;
+      padding: 0 0.5rem;
     }
 
     .product-card {
@@ -360,5 +364,4 @@
     }
   }
 }
-// Remove this extra closing brace as it has no matching opening brace
 
