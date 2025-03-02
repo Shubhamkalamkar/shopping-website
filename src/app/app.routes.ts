@@ -7,6 +7,21 @@ export const routes: Routes = [
       import('./layout/layout.component').then((c) => c.LayoutComponent),
     children: [
       {
+        path: 'account',
+        children: [
+          {
+            path: 'login',
+            loadComponent: () =>
+              import('./auth/login/login.component').then((c) => c.LoginComponent),
+          },
+          {
+            path: 'signup',
+            loadComponent: () =>
+              import('./auth/signup/signup.component').then((c) => c.SignupComponent),
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
