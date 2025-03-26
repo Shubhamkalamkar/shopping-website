@@ -45,6 +45,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
 
   readonly categories = [
+    {id: 'home', name: 'HOME', icon: 'home', description: 'Shop Home Collection', comingSoon: false},
     { id: 'men', name: 'MEN', icon: 'person', description: 'Shop Men\'s Collection', comingSoon: false },
     { id: 'women', name: 'WOMEN', icon: 'person_outline', description: 'Shop Women\'s Collection', comingSoon: false },
     { id: 'kids', name: 'KIDS', icon: 'child_care', description: 'Shop Kids\' Collection', comingSoon: false },

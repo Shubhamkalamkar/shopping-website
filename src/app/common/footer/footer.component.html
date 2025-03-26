@@ -1,60 +1,49 @@
-<footer class="footer">
-  <div class="footer-top">
-    <div class="newsletter-section">
-      <h2>BE THE FIRST TO ACCESS AMIRI LAUNCHES AND EVENTS. GDPR COMPLIANT</h2>
-      <form (ngSubmit)="onSubmit()" class="newsletter-form">
-        <input type="email" [(ngModel)]="email" name="email" placeholder="YOUR EMAIL*" required>
-        <button type="submit">SIGN UP</button>
-      </form>
-      <div class="location-info">
-        <span>LOCATION: INDIA</span>
-        <button class="cookies-btn">COOKIES SETTINGS</button>
-      </div>
-      <div class="notify-section">
-        <span>DON'T SEE YOUR COUNTRY? SIGNUP TO RECEIVE UPDATES WHEN IT'S AVAILABLE.</span>
-        <button class="notify-btn">NOTIFY ME</button>
-      </div>
-    </div>
-  </div>
-
+<footer class="main-footer">
   <div class="footer-content">
     <div class="footer-section">
-      <h3>ABOUT AMIRI</h3>
+      <h3>SHOP</h3>
       <ul>
-        <li><a routerLink="/retail-locations">RETAIL LOCATIONS</a></li>
-        <li><a routerLink="/store-locator">STORE LOCATOR</a></li>
-        <li><a routerLink="/stockists">STOCKISTS</a></li>
-        <li><a routerLink="/careers">CAREERS</a></li>
-        <li><a routerLink="/tmall">TMALL</a></li>
-        <li><a routerLink="/amiri-prize">AMIRI PRIZE</a></li>
+        <li><a routerLink="/new-arrivals">New Arrivals</a></li>
+        <li><a routerLink="/best-sellers">Best Sellers</a></li>
+        <li><a routerLink="/collections">Collections</a></li>
+        <li><a routerLink="/sale">Sale</a></li>
       </ul>
     </div>
-
     <div class="footer-section">
-      <h3>CLIENT SERVICES</h3>
+      <h3>HELP</h3>
       <ul>
-        <li><a routerLink="/holiday-faq">HOLIDAY FAQ</a></li>
-        <li><a routerLink="/shipping-returns">SHIPPING & RETURNS</a></li>
-        <li><a routerLink="/us-returns">US RETURNS</a></li>
-        <li><a routerLink="/international-returns">INTERNATIONAL RETURNS</a></li>
-        <li><a routerLink="/terms">TERMS OF USE</a></li>
-        <li><a routerLink="/privacy">PRIVACY POLICY</a></li>
+        <li><a routerLink="/contact">Contact Us</a></li>
+        <li><a routerLink="/shipping-returns">Shipping & Returns</a></li>
+        <li><a routerLink="/faq">FAQ</a></li>
+        <li><a routerLink="/size-guide">Size Guide</a></li>
       </ul>
     </div>
-
     <div class="footer-section">
-      <h3>CONNECT</h3>
+      <h3>ABOUT</h3>
       <ul>
-        <li><a routerLink="/contact">CONTACT</a></li>
-        <li><a href="https://facebook.com/amiri" target="_blank">FACEBOOK</a></li>
-        <li><a href="https://instagram.com/amiri" target="_blank">INSTAGRAM</a></li>
+        <li><a routerLink="/our-story">Our Story</a></li>
+        <li><a routerLink="/sustainability">Sustainability</a></li>
+        <li><a routerLink="/careers">Careers</a></li>
+        <li><a routerLink="/press">Press</a></li>
       </ul>
+    </div>
+    <div class="footer-section">
+      <h3>FOLLOW US</h3>
+      <div class="social-links">
+        <a href="#" class="social-link">
+          <img width="28" height="28" src="https://img.icons8.com/fluency/48/instagram-new.png" alt="instagram-new" class="social-icon"/> Instagram
+        </a>
+        <a href="#" class="social-link">
+          <img width="28" height="28" src="https://img.icons8.com/fluency/48/facebook-new.png" alt="facebook-new" class="social-icon"/> Facebook
+        </a>
+        
+        <a href="#" class="social-link">
+          <img width="28" height="28" src="https://img.icons8.com/ios/50/twitterx--v1.png" alt="twitterx--v1"/> Twitter
+        </a>
+      </div>
     </div>
   </div>
-
   <div class="footer-bottom">
-    <div class="logo">
-      <img src="/logo.jpg" alt="AMIRI" class="footer-logo">
-    </div>
+    <p>&copy; 2023 AHARON BETH. All rights reserved.</p>
   </div>
 </footer>
