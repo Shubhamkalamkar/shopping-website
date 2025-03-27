@@ -7,53 +7,7 @@
 }
 
 // Navigation styles
-.main-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
-  z-index: 1000;
-  transition: background-color 0.3s ease;
 
-  .nav-left, .nav-right {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .nav-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .nav-link {
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    transition: opacity 0.3s;
-    font-weight: 400;
-    text-transform: uppercase;
-
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-
-  .logo {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-}
 
 // Hero section with video background
 .hero-section {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { AuthResponse } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +19,50 @@ export class AuthService {
     }
   }
 
-  login(credentials: { email: string; password: string }): Promise<void> {
-    // Implement actual login logic here
-    // For now, we'll simulate a successful login
-    const mockUser: User = {
-      id: '1',
-      name: 'John Doe',
-      email: credentials.email
+  login(email: string): Observable<AuthResponse> {
+    // Simulate API call with mock data
+    const mockResponse: AuthResponse = {
+      token: 'mock-jwt-token',
+      userId: '1',
+      email: email,
+      expiresIn: 3600
     };
-    
-    localStorage.setItem('currentUser', JSON.stringify(mockUser));
-    this.currentUserSubject.next(mockUser);
-    return Promise.resolve();
+
+    return of(mockResponse).pipe(
+      delay(1000), // Simulate network delay
+      tap(response => {
+        const user: User = {
+          id: response.userId,
+          email: response.email,
+          name: 'John Doe'
+        };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+      })
+    );
+  }
+
+  register(userData: { firstName: string; lastName: string; email: string; phoneNumber: string; password: string }): Observable<AuthResponse> {
+    // Simulate API call with mock data
+    const mockResponse: AuthResponse = {
+      token: 'mock-jwt-token',
+      userId: Math.random().toString(36).substr(2, 9),
+      email: userData.email,
+      expiresIn: 3600
+    };
+
+    return of(mockResponse).pipe(
+      delay(1000), // Simulate network delay
+      tap(response => {
+        const user: User = {
+          id: response.userId,
+          email: response.email,
+          name: 'New User'
+        };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+      })
+    );
   }
 
   logout(): void {

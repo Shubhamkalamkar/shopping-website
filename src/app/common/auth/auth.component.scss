@@ -1,0 +1,292 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #F5E5CE 0%, #f8efe3 100%);
+
+  .auth-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+
+      h2 {
+        font-size: 2.25rem;
+        color: #2d3748;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        font-family: Garamond, serif;
+      }
+
+      p {
+        color: #718096;
+        font-size: 1.15rem;
+        line-height: 1.6;
+      }
+    }
+
+    .auth-form {
+      .name-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.75rem;
+          color: #4a5568;
+          font-weight: 600;
+          font-size: 1rem;
+        }
+
+        input {
+          &[type="text"],
+          &[type="email"],
+          &[type="password"],
+          &[type="tel"] {  // Added tel input type for phone number
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            color: #2d3748;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+
+            &::placeholder {
+              color: #a0aec0;
+            }
+
+            &:hover {
+              border-color: #cbd5e0;
+            }
+
+            &:focus {
+              outline: none;
+              border-color: #F5E5CE;
+              box-shadow: 0 0 0 4px rgba(245, 229, 206, 0.2);
+            }
+
+            &.invalid {
+              border-color: #fc8181;
+              background-color: #fff5f5;
+
+              &:focus {
+                box-shadow: 0 0 0 4px rgba(252, 129, 129, 0.15);
+              }
+            }
+          }
+        }
+
+        .phone-input-container {
+          position: relative;
+          width: 100%;
+
+          // If you want to add a country code selector later
+          // you can style it here to match the input field
+        }
+
+        .password-input-container {
+          position: relative;
+
+          .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #718096;
+            z-index: 2;
+
+            &:hover {
+              color: #4a5568;
+            }
+
+            .fas {
+              font-size: 1.25rem;
+            }
+          }
+        }
+
+        .password-validation-list {
+          margin-top: 1rem;
+          padding: 1.25rem;
+          background-color: #f7fafc;
+          border-radius: 12px;
+          border: 1px solid #edf2f7;
+
+          .validation-item {
+            display: flex;
+            align-items: center;
+            margin: 0.75rem 0;
+            color: #718096;
+            font-size: 0.95rem;
+
+            &.valid {
+              color: #48bb78;
+            }
+
+            .fas {
+              margin-right: 1rem;
+              font-size: 1rem;
+
+              &.fa-check {
+                color: #48bb78;
+              }
+
+              &.fa-times {
+                color: #fc8181;
+              }
+            }
+          }
+        }
+
+        .error-message {
+          color: #e53e3e;
+          font-size: 0.925rem;
+          margin-top: 0.75rem;
+          display: block;
+          animation: fadeIn 0.3s ease;
+          padding-left: 0.5rem;
+          border-left: 3px solid #e53e3e;
+        }
+      }
+
+      .error-alert {
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+        color: #c53030;
+        background-color: #fff5f5;
+        border: 1px solid #fed7d7;
+        border-radius: 12px;
+        font-size: 1rem;
+        animation: fadeIn 0.4s ease;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .fas {
+          font-size: 1.25rem;
+        }
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background-color: #F5E5CE;
+        color: #2d3748;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+
+        &:hover {
+          background-color: darken(#F5E5CE, 5%);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        &:disabled {
+          background-color: #e2e8f0;
+          cursor: not-allowed;
+          opacity: 0.7;
+        }
+      }
+
+      .switch-mode {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #718096;
+
+        a {
+          color: #2d3748;
+          text-decoration: none;
+          font-weight: 600;
+          cursor: pointer;
+
+          &:hover {
+            color: #F5E5CE;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1rem;
+
+    .auth-card {
+      padding: 1.5rem;
+      max-width: 100%;
+
+      .auth-header {
+        margin-bottom: 2rem;
+        
+        h2 {
+          font-size: 1.75rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+
+      .auth-form {
+        .name-group {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .form-group {
+          margin-bottom: 1.25rem;
+
+          input {
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+          }
+        }
+
+        .submit-btn {
+          padding: 0.875rem;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

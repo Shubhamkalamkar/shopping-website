@@ -1,0 +1,146 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>{{ isLoginMode ? 'Login' : 'Sign Up' }}</h2>
+      <p>{{ isLoginMode ? 'Welcome back!' : 'Create your account' }}</p>
+    </div>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <ng-container *ngIf="!isLoginMode">
+        <div class="name-group">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              [class.invalid]="authForm.get('firstName')?.invalid && authForm.get('firstName')?.touched"
+            />
+            <span class="error-message" *ngIf="authForm.get('firstName')?.invalid && authForm.get('firstName')?.touched">
+              {{ getErrorMessage('firstName') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              [class.invalid]="authForm.get('lastName')?.invalid && authForm.get('lastName')?.touched"
+            />
+            <span class="error-message" *ngIf="authForm.get('lastName')?.invalid && authForm.get('lastName')?.touched">
+              {{ getErrorMessage('lastName') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <div class="phone-input-container">
+            <input
+              type="tel"
+              id="phoneNumber"
+              formControlName="phoneNumber"
+              placeholder="Enter your phone number"
+              [class.invalid]="authForm.get('phoneNumber')?.invalid && authForm.get('phoneNumber')?.touched"
+            />
+          </div>
+          <span class="error-message" *ngIf="authForm.get('phoneNumber')?.invalid && authForm.get('phoneNumber')?.touched">
+            {{ getErrorMessage('phoneNumber') }}
+          </span>
+        </div>
+      </ng-container>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.invalid]="authForm.get('email')?.invalid && authForm.get('email')?.touched"
+        />
+        <span class="error-message" *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched">
+          {{ getErrorMessage('email') }}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input-container">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            [class.invalid]="authForm.get('password')?.invalid && authForm.get('password')?.touched"
+          />
+          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+          </button>
+        </div>
+        <span class="error-message" *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
+          {{ getErrorMessage('password') }}
+        </span>
+
+        <div class="password-validation-list" *ngIf="!isLoginMode">
+          <div class="validation-item" [class.valid]="passwordValidationStatus.minLength">
+            <i class="fas" [class.fa-check]="passwordValidationStatus.minLength" [class.fa-times]="!passwordValidationStatus.minLength"></i>
+            {{ passwordValidationMessages.minLength }}
+          </div>
+          <div class="validation-item" [class.valid]="passwordValidationStatus.uppercase">
+            <i class="fas" [class.fa-check]="passwordValidationStatus.uppercase" [class.fa-times]="!passwordValidationStatus.uppercase"></i>
+            {{ passwordValidationMessages.uppercase }}
+          </div>
+          <div class="validation-item" [class.valid]="passwordValidationStatus.lowercase">
+            <i class="fas" [class.fa-check]="passwordValidationStatus.lowercase" [class.fa-times]="!passwordValidationStatus.lowercase"></i>
+            {{ passwordValidationMessages.lowercase }}
+          </div>
+          <div class="validation-item" [class.valid]="passwordValidationStatus.number">
+            <i class="fas" [class.fa-check]="passwordValidationStatus.number" [class.fa-times]="!passwordValidationStatus.number"></i>
+            {{ passwordValidationMessages.number }}
+          </div>
+          <div class="validation-item" [class.valid]="passwordValidationStatus.special">
+            <i class="fas" [class.fa-check]="passwordValidationStatus.special" [class.fa-times]="!passwordValidationStatus.special"></i>
+            {{ passwordValidationMessages.special }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="!isLoginMode">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-input-container">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            [class.invalid]="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched"
+          />
+          <button type="button" class="toggle-password" (click)="toggleConfirmPasswordVisibility()">
+            <i class="fas" [class.fa-eye]="!showConfirmPassword" [class.fa-eye-slash]="showConfirmPassword"></i>
+          </button>
+        </div>
+        <span class="error-message" *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched">
+          {{ getErrorMessage('confirmPassword') }}
+        </span>
+      </div>
+
+      <div class="error-alert" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button type="submit" [disabled]="authForm.invalid || isLoading" class="submit-btn">
+        <span *ngIf="!isLoading">{{ isLoginMode ? 'Login' : 'Sign Up' }}</span>
+        <span *ngIf="isLoading">Loading...</span>
+      </button>
+
+      <div class="switch-mode">
+        <p>
+          {{ isLoginMode ? 'Don\'t have an account?' : 'Already have an account?' }}
+          <a (click)="onSwitchMode()">
+            {{ isLoginMode ? 'Sign Up' : 'Login' }}
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

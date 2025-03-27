@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private cartService: CartService,
     private wishlistService: WishlistService,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private router: Router
   ) {
     this.currentUser$ = this.authService.currentUser$;
   }
@@ -41,6 +42,10 @@ export class HeaderComponent implements OnInit {
     this.wishlistService.wishlistItems$.subscribe(items => {
       this.wishlistItemCount = items.length;
     });
+  }
+
+  home(): void {
+    this.router.navigate(['/home']);
   }
 
   toggleUserMenu(): void {

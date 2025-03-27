@@ -8,8 +8,18 @@
   left: 0;
   right: 0;
   z-index: 1002;
-  height: 70px;
+  height: 50px;
   overflow: hidden;
+
+  .company-name {
+    font-family: Garamond, serif;
+    font-size: 24px;
+    color: #000;
+    margin: 15px;
+    padding: 0;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
 
   .nav-container {
     width: 100%;
@@ -45,17 +55,25 @@
     transform: translate(-50%, -50%);
     text-align: center;
     width: auto;
-    pointer-events: none;
+    // pointer-events: none;
 
-    .company-name {
-      font-family: Garamond, serif;
-      font-size: 24px;
+    a {
+      display: block;
+      margin-bottom: 1rem;
       color: #000;
-      margin: 0;
-      padding: 0;
-      letter-spacing: 1px;
-      white-space: nowrap;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #333;
+      }
+
+      
     }
+
+
+    
   }
 
   .user-actions {
