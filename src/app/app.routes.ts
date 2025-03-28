@@ -47,6 +47,11 @@ export const routes: Routes = [
           import('./pages/product/gifting/gifting-product.component').then((c) => c.GiftingProductComponent),
       },
       {
+        path: 'product/:id',
+        loadComponent: () =>
+          import('./pages/product/product-view/product-view.component').then((c) => c.ProductViewComponent),
+      },
+      {
         path: '**',
         redirectTo: 'home'
       }

@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductFilterComponent } from './filter/product-filter.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-page',
@@ -44,7 +45,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private wishlistService: WishlistService,
     private cartService: CartService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.products$ = this.productService.getProducts().pipe(
       takeUntil(this.destroy$),
@@ -115,6 +117,10 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     } catch (error) {
       this.showErrorMessage('Error adding to cart');
     }
+  }
+
+  viewProduct(productId: string) {
+    this.router.navigate(['/product', productId]);
   }
 
   isInWishlist(productId: string): boolean {

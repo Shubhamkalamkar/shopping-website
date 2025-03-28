@@ -23,6 +23,8 @@ export interface Product {
   reviews?: number;
   isNew?: boolean;
   isFeatured?: boolean;
+  selectedSize?: string;
+  quantity?: number;
 }
 
 export interface ProductState {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Product, ProductFilter, ProductState } from '../models/product-page.model';
 
 @Injectable({
@@ -22,6 +22,18 @@ export class ProductService {
     return new Observable<Product[]>((observer) => {
       observer.next(this.state.value.filteredProducts);
     });
+  }
+
+  getProductById(id: string): Observable<Product | undefined> {
+    const product = this.state.value.products.find(p => p.id === id);
+    return of(product);
+  }
+
+  getProductsByCategory(category: string, limit?: number): Observable<Product[]> {
+    const products = this.state.value.products
+      .filter(p => p.category === category)
+      .slice(0, limit || this.state.value.products.length);
+    return of(products);
   }
 
   setProducts(products: Product[]) {

@@ -1,0 +1,157 @@
+<div class="product-view-container" *ngIf="product">
+  <div class="product-breadcrumb">
+    <a routerLink="/">Home</a> / 
+    <a [routerLink]="['/products', product.category]">{{ product.category | titlecase }}</a> / 
+    <span>{{ product.name }}</span>
+  </div>
+
+  <div class="product-details">
+    <!-- Product Images Section -->
+    <div class="product-images">
+      <div class="main-image">
+        <img [src]="product.images[selectedImageIndex]" [alt]="product.name">
+        <button class="wishlist-btn" (click)="toggleWishlist()" [class.active]="isInWishlist()">
+          <mat-icon>{{ isInWishlist() ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </button>
+      </div>
+      <div class="thumbnail-images">
+        <div 
+          *ngFor="let image of product.images; let i = index" 
+          class="thumbnail" 
+          [class.active]="selectedImageIndex === i"
+          (click)="changeImage(i)">
+          <img [src]="image" [alt]="product.name + ' thumbnail ' + i">
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Info Section -->
+    <div class="product-info">
+      <h1 class="product-name">{{ product.name }}</h1>
+      
+      <div class="product-price-section">
+        <span class="product-price">₹{{ product.price | number:'1.2-2' }}</span>
+        <span class="product-discount" *ngIf="product.discount">
+          <span class="original-price">₹{{ (product.price / (1 - product.discount / 100)) | number:'1.2-2' }}</span>
+          <span class="discount-percent">{{ product.discount }}% OFF</span>
+        </span>
+      </div>
+
+      <div class="product-rating" *ngIf="product.rating">
+        <div class="stars">
+          <mat-icon *ngFor="let star of [1,2,3,4,5]" class="star-icon" [class.filled]="star <= product.rating">
+            {{ star <= product.rating ? 'star' : 'star_border' }}
+          </mat-icon>
+        </div>
+        <span class="rating-count" *ngIf="product.reviews">{{ product.reviews }} Reviews</span>
+      </div>
+
+      <div class="product-availability" [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
+        {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+      </div>
+
+      <div class="product-description">
+        <p>{{ product.description }}</p>
+      </div>
+
+      <div class="product-size-selection" *ngIf="product.sizes && product.sizes.length > 0">
+        <h3>Select Size</h3>
+        <div class="size-options">
+          <button 
+            *ngFor="let size of product.sizes" 
+            class="size-option" 
+            [class.selected]="selectedSize === size"
+            (click)="selectedSize = size">
+            {{ size }}
+          </button>
+        </div>
+      </div>
+
+      <div class="product-color-selection" *ngIf="product.colors && product.colors.length > 0">
+        <h3>Available Colors</h3>
+        <div class="color-options">
+          <div 
+            *ngFor="let color of product.colors" 
+            class="color-option"
+            [style.background-color]="color"
+            [attr.title]="color">
+          </div>
+        </div>
+      </div>
+
+      <div class="product-quantity">
+        <h3>Quantity</h3>
+        <div class="quantity-selector">
+          <button (click)="selectedQuantity = selectedQuantity > 1 ? selectedQuantity - 1 : 1">-</button>
+          <span>{{ selectedQuantity }}</span>
+          <button (click)="selectedQuantity = selectedQuantity + 1">+</button>
+        </div>
+      </div>
+
+      <div class="product-actions">
+        <button 
+          mat-button 
+          class="add-to-cart-btn" 
+          (click)="addToCart()" 
+          [disabled]="!product.inStock">
+          <mat-icon>shopping_cart</mat-icon> ADD TO CART
+        </button>
+        <button 
+          mat-button 
+          class="buy-now-btn" 
+          (click)="buyNow()" 
+          [disabled]="!product.inStock">
+          <mat-icon>flash_on</mat-icon> BUY NOW
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Tabs Section -->
+  <div class="product-tabs">
+    <mat-tab-group>
+      <mat-tab label="Description">
+        <div class="tab-content">
+          <h3>Product Description</h3>
+          <p>{{ product.description }}</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Reviews" *ngIf="product.reviews && product.reviews > 0">
+        <div class="tab-content">
+          <h3>Customer Reviews</h3>
+          <p>This product has {{ product.reviews }} reviews with an average rating of {{ product.rating }}/5.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Shipping & Returns">
+        <div class="tab-content">
+          <h3>Shipping Information</h3>
+          <p>Free shipping on all orders over ₹999. Standard delivery takes 3-5 business days.</p>
+          
+          <h3>Return Policy</h3>
+          <p>Returns accepted within 30 days of delivery. Items must be unworn and in original packaging.</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <!-- Related Products Section -->
+  <div class="related-products" *ngIf="relatedProducts.length > 0">
+    <h2>You May Also Like</h2>
+    <div class="related-products-grid">
+      <div class="product-card" *ngFor="let relatedProduct of relatedProducts">
+        <div class="product-image">
+          <img [src]="relatedProduct.images[0]" [alt]="relatedProduct.name" (click)="viewProduct(relatedProduct.id)">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">{{ relatedProduct.name }}</h3>
+          <p class="product-price">₹{{ relatedProduct.price | number:'1.2-2' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-container" *ngIf="!product">
+  <mat-icon class="loading-icon">hourglass_empty</mat-icon>
+  <p>Loading product details...</p>
+</div>

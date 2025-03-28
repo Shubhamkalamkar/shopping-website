@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ACCESSORIES_PRODUCTS } from '../../../data/accessories-products';
+import { ACCESSORIES_PRODUCTS as accessoriesProducts } from '../../../data/accessories-products';
 import { ProductPageComponent } from '../product-page.component';
 import { ProductService } from '../../../services/product.service';
 import { WishlistService } from '../../../services/wishlist.service';
@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductFilterComponent } from '../filter/product-filter.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accessories-product',
@@ -35,11 +36,12 @@ export class AccessoriesProductComponent extends ProductPageComponent {
     productService: ProductService,
     wishlistService: WishlistService,
     cartService: CartService,
-    snackBar: MatSnackBar
+    snackBar: MatSnackBar,
+    router: Router
   ) {
-    super(productService, wishlistService, cartService, snackBar);
+    super(productService, wishlistService, cartService, snackBar, router);
     this.pageTitle = 'Accessories Collection';
     this.category = 'accessories';
-    productService.setProducts(ACCESSORIES_PRODUCTS);
+    productService.setProducts(accessoriesProducts);
   }
 }

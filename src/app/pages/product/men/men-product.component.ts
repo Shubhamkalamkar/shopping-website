@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductFilterComponent } from '../filter/product-filter.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-men-product',
@@ -35,9 +36,10 @@ export class MenProductComponent extends ProductPageComponent {
     productService: ProductService,
     wishlistService: WishlistService,
     cartService: CartService,
-    snackBar: MatSnackBar
+    snackBar: MatSnackBar,
+    router: Router
   ) {
-    super(productService, wishlistService, cartService, snackBar);
+    super(productService, wishlistService, cartService, snackBar, router);
     this.pageTitle = 'Men\'s Collection';
     this.category = 'men';
     productService.setProducts(menProducts);

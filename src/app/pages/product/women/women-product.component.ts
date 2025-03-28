@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WOMEN_PRODUCTS } from '../../../data/women-products';
+import { WOMEN_PRODUCTS as womenProducts } from '../../../data/women-products';
 import { ProductPageComponent } from '../product-page.component';
 import { ProductService } from '../../../services/product.service';
 import { WishlistService } from '../../../services/wishlist.service';
@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductFilterComponent } from '../filter/product-filter.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-women-product',
@@ -35,11 +36,12 @@ export class WomenProductComponent extends ProductPageComponent {
     productService: ProductService,
     wishlistService: WishlistService,
     cartService: CartService,
-    snackBar: MatSnackBar
+    snackBar: MatSnackBar,
+    router: Router
   ) {
-    super(productService, wishlistService, cartService, snackBar);
+    super(productService, wishlistService, cartService, snackBar, router);
     this.pageTitle = 'Women\'s Collection';
     this.category = 'women';
-    productService.setProducts(WOMEN_PRODUCTS);
+    productService.setProducts(womenProducts);
   }
 }
