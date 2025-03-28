@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product, ProductFilter } from '../../models/product-page.model';
-import { Observable, Subject, takeUntil, catchError } from 'rxjs';
+import { Observable, Subject, takeUntil, catchError, of } from 'rxjs';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +12,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductFilterComponent } from './filter/product-filter.component';
 
 @Component({
   selector: 'app-product-page',
@@ -26,7 +27,7 @@ import { CommonModule } from '@angular/common';
     MatChipsModule,
     MatSliderModule,
     MatRadioModule,
-    MatChipsModule
+    ProductFilterComponent
   ],
   providers: [MatSnackBar]
 })
@@ -49,13 +50,12 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       catchError(error => {
         this.showErrorMessage('Error loading products');
-        throw error;
+        return of([]);
       })
     );
   }
 
   ngOnInit() {
-    // Initialize with category filter
     if (this.category) {
       this.productService.applyFilter({ categories: [this.category] });
     }
@@ -63,10 +63,22 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   toggleFilterSidebar() {
     this.isFilterSidebarOpen = !this.isFilterSidebarOpen;
+    
+    // Prevent scrolling when filter sidebar is open on mobile
+    if (this.isFilterSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   applyFilters(filter: ProductFilter) {
     try {
+      // Keep the category filter if it's set
+      if (this.category) {
+        filter.categories = [this.category];
+      }
+      
       this.currentFilter = { ...this.currentFilter, ...filter };
       this.productService.applyFilter(this.currentFilter);
     } catch (error) {
@@ -82,12 +94,17 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToWishlist(product: Product) {
+  toggleWishlist(product: Product) {
     try {
-      this.wishlistService.addToWishlist(product);
-      this.showSuccessMessage('Added to wishlist');
+      if (this.isInWishlist(product.id)) {
+        this.wishlistService.removeFromWishlist(product.id);
+        this.showSuccessMessage('Removed from wishlist');
+      } else {
+        this.wishlistService.addToWishlist(product);
+        this.showSuccessMessage('Added to wishlist');
+      }
     } catch (error) {
-      this.showErrorMessage('Error adding to wishlist');
+      this.showErrorMessage('Error updating wishlist');
     }
   }
 
@@ -100,12 +117,12 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  isInWishlist(product: Product): boolean {
-    return this.wishlistService.isInWishlist(product.id);
+  isInWishlist(productId: string): boolean {
+    return this.wishlistService.isInWishlist(productId);
   }
 
-  isInCart(product: Product): boolean {
-    return this.cartService.isInCart(product.id);
+  isInCart(productId: string): boolean {
+    return this.cartService.isInCart(productId);
   }
 
   private showSuccessMessage(message: string) {
@@ -129,5 +146,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    
+    // Reset body overflow in case component is destroyed while filter is open
+    document.body.style.overflow = '';
   }
 }

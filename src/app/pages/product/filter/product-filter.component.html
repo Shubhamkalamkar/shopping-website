@@ -1,0 +1,97 @@
+<div class="filter-container">
+  <div class="filter-header">
+    <h3>Filter Products</h3>
+    <button class="clear-btn" (click)="clearFilters()">Clear All</button>
+  </div>
+
+  <!-- Sort Options -->
+  <div class="sort-options">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Sort By</mat-label>
+      <mat-select [(ngModel)]="selectedSort" (selectionChange)="onSortChange($event.value)">
+        <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-accordion>
+    <!-- Price Range Filter -->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Price Range</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="price-range">
+        <mat-slider [min]="0" [max]="200000" [step]="1000" [discrete]="true">
+          <input matSliderStartThumb [(ngModel)]="priceRange[0]" (ngModelChange)="onFilterChange()">
+          <input matSliderEndThumb [(ngModel)]="priceRange[1]" (ngModelChange)="onFilterChange()">
+        </mat-slider>
+        <div class="price-values">
+          <span>₹{{ priceRange[0] }}</span>
+          <span>₹{{ priceRange[1] }}</span>
+        </div>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Categories Filter -->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Categories</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="categories-list">
+        <mat-checkbox *ngFor="let category of categories"
+                      [checked]="selectedCategories.includes(category)"
+                      (change)="onCategoryChange(category, $event.checked)">
+          {{ category }}
+        </mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Sizes Filter -->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Sizes</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="sizes-list">
+        <mat-checkbox *ngFor="let size of sizes"
+                      [checked]="selectedSizes.includes(size)"
+                      (change)="onSizeChange(size, $event.checked)">
+          {{ size }}
+        </mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Colors Filter -->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Colors</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="colors-list">
+        <mat-checkbox *ngFor="let color of colors"
+                      [checked]="selectedColors.includes(color)"
+                      (change)="onColorChange(color, $event.checked)">
+          <span class="color-dot" [style.background-color]="color.toLowerCase()"></span>
+          {{ color }}
+        </mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+
+    <!-- Ratings Filter -->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Ratings</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="ratings-list">
+        <mat-checkbox *ngFor="let rating of ratings"
+                      [checked]="selectedRatings.includes(rating)"
+                      (change)="onRatingChange(rating, $event.checked)">
+          <span class="rating-stars">
+            <mat-icon *ngFor="let star of [].constructor(rating)" class="star-icon">star</mat-icon>
+            <mat-icon *ngFor="let star of [].constructor(5-rating)" class="star-icon empty">star_border</mat-icon>
+          </span>
+        </mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

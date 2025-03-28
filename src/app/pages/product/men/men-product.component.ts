@@ -11,10 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { ProductFilterComponent } from '../filter/product-filter.component';
 
 @Component({
   selector: 'app-men-product',
-  templateUrl: '../product-page.component.html',
+  templateUrl: './men-product.component.html',
   styleUrls: ['../product-page.component.scss'],
   standalone: true,
   imports: [
@@ -23,7 +25,9 @@ import { MatSliderModule } from '@angular/material/slider';
     MatIconModule,
     MatChipsModule,
     MatRadioModule,
-    MatSliderModule
+    MatSliderModule,
+    MatButtonModule,
+    ProductFilterComponent
   ]
 })
 export class MenProductComponent extends ProductPageComponent {

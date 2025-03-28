@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { ProductFilterComponent } from '../filter/product-filter.component';
 
 @Component({
   selector: 'app-gifting-product',
@@ -22,7 +24,9 @@ import { MatSliderModule } from '@angular/material/slider';
     MatIconModule,
     MatChipsModule,
     MatRadioModule,
-    MatSliderModule
+    MatSliderModule,
+    MatButtonModule,
+    ProductFilterComponent
   ]
 })
 export class GiftingProductComponent extends ProductPageComponent {

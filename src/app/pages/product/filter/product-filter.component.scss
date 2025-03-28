@@ -1,0 +1,93 @@
+.filter-container {
+  padding: 1rem;
+
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .clear-btn {
+      border: none;
+      background: none;
+      color: #666;
+      cursor: pointer;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  .sort-options {
+    margin-bottom: 1rem;
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  .price-range {
+    padding: 0 1rem;
+    .price-values {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      color: #666;
+    }
+  }
+
+  .categories-list,
+  .sizes-list,
+  .colors-list,
+  .ratings-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .color-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+  }
+
+  .rating-stars {
+    display: inline-flex;
+    align-items: center;
+    .star-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #ffd700;
+      &.empty {
+        color: #ddd;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .mat-expansion-panel {
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .mat-checkbox {
+      margin: 4px 0;
+    }
+
+    .mat-slider {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}

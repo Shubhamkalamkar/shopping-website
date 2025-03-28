@@ -1,4 +1,4 @@
-import { Product } from '../models/product.model';
+import { Product } from '../models/product-page.model';
 
 export const ACCESSORIES_PRODUCTS: Product[] = [
   {
@@ -6,7 +6,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
     name: 'Leather Tote Bag',
     description: 'Spacious and stylish leather tote perfect for everyday use',
     price: 129.99,
-    imageUrl: 'assets/images/accessories/tote-bag.jpg',
+    images: ['assets/images/accessories/tote-bag.jpg'],
     category: 'accessories',
     inStock: true
   },
@@ -15,7 +15,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
     name: 'Classic Sunglasses',
     description: 'Timeless design sunglasses with UV protection',
     price: 79.99,
-    imageUrl: 'assets/images/accessories/sunglasses.jpg',
+    images: ['assets/images/accessories/sunglasses.jpg'],
     category: 'accessories',
     inStock: true
   },
@@ -24,7 +24,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
     name: 'Silver Statement Necklace',
     description: 'Elegant silver necklace for any occasion',
     price: 49.99,
-    imageUrl: 'assets/images/accessories/necklace.jpg',
+    images: ['assets/images/accessories/necklace.jpg'],
     category: 'accessories',
     inStock: true
   },
@@ -33,7 +33,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
     name: 'Leather Belt',
     description: 'Premium leather belt with classic buckle',
     price: 34.99,
-    imageUrl: 'assets/images/accessories/belt.jpg',
+    images: ['assets/images/accessories/belt.jpg'],
     category: 'accessories',
     inStock: true
   },
@@ -42,7 +42,7 @@ export const ACCESSORIES_PRODUCTS: Product[] = [
     name: 'Silk Scarf',
     description: 'Luxurious silk scarf with modern print',
     price: 45.99,
-    imageUrl: 'assets/images/accessories/scarf.jpg',
+    images: ['assets/images/accessories/scarf.jpg'],
     category: 'accessories',
     inStock: true
   }

@@ -1,6 +1,6 @@
 import { Product } from '../models/product-page.model';
 
-export const womenProducts: Product[] = [
+export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'w1',
     name: 'Silk Blend Wrap Dress',
