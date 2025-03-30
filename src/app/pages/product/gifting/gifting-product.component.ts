@@ -3,6 +3,7 @@ import { ProductPageComponent } from '../product-page.component';
 import { ProductService } from '../../../services/product.service';
 import { WishlistService } from '../../../services/wishlist.service';
 import { CartService } from '../../../services/cart.service';
+import { CheckoutService } from '../../../services/checkout.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gifting-product',
-  templateUrl: '../product-page.component.html',
+  templateUrl: './gifting-product.component.html',
   styleUrls: ['../product-page.component.scss'],
   standalone: true,
   imports: [
@@ -35,10 +36,11 @@ export class GiftingProductComponent extends ProductPageComponent {
     productService: ProductService,
     wishlistService: WishlistService,
     cartService: CartService,
+    checkoutService: CheckoutService,
     snackBar: MatSnackBar,
     router: Router
   ) {
-    super(productService, wishlistService, cartService, snackBar, router);
+    super(productService, wishlistService, cartService, checkoutService, snackBar, router);
     this.pageTitle = 'Gifting Collection';
     this.category = 'gifting';
   }

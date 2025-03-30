@@ -24,7 +24,16 @@ export interface Product {
   isNew?: boolean;
   isFeatured?: boolean;
   selectedSize?: string;
+  selectedColor?: string;
   quantity?: number;
+  sku?: string;
+  originalPrice?: number;
+  discountPercentage?: number;
+  features?: string[];
+  material?: string;
+  careInstructions?: string;
+  shippingInfo?: string;
+  returnPolicy?: string;
 }
 
 export interface ProductState {
@@ -33,4 +42,22 @@ export interface ProductState {
   currentFilter: ProductFilter;
   loading: boolean;
   error: string | null;
+}
+
+export interface CheckoutInfo {
+  products: Product[];
+  totalAmount: number;
+  shippingAddress?: ShippingAddress;
+  paymentMethod?: string;
+}
+
+export interface ShippingAddress {
+  fullName: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  phoneNumber: string;
 }

@@ -11,7 +11,8 @@ import { Product } from '../../../models/product-page.model';
 import { ProductService } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { WishlistService } from '../../../services/wishlist.service';
-import { map, filter } from 'rxjs/operators';
+import { CheckoutService } from '../../../services/checkout.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-view',
@@ -32,6 +33,7 @@ import { map, filter } from 'rxjs/operators';
 export class ProductViewComponent implements OnInit {
   product: Product | null = null;
   selectedSize: string = '';
+  selectedColor: string = '';
   selectedQuantity: number = 1;
   selectedImageIndex: number = 0;
   relatedProducts: Product[] = [];
@@ -42,6 +44,7 @@ export class ProductViewComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private wishlistService: WishlistService,
+    private checkoutService: CheckoutService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -62,12 +65,37 @@ export class ProductViewComponent implements OnInit {
       map(products => products.find(p => p.id === productId))
     ).subscribe((product: Product | undefined) => {
       if (product) {
-        this.product = product;
+        // Add additional fields for the new design if they don't exist
+        this.product = {
+          ...product,
+          sku: product.sku || `AB-ML-${Math.floor(10000 + Math.random() * 90000)}`,
+          originalPrice: product.originalPrice || (product.discount ? this.calculateOriginalPrice(product.price, product.discount) : undefined),
+          discountPercentage: product.discountPercentage || product.discount,
+          features: product.features || [
+            'Premium quality materials',
+            'Tailored silhouette for refined look',
+            'Exceptional comfort and durability'
+          ],
+          material: product.material || 'Premium wool blend fabric',
+          careInstructions: product.careInstructions || 'Dry clean only. Do not bleach. Iron at medium temperature.',
+          shippingInfo: product.shippingInfo,
+          returnPolicy: product.returnPolicy
+        };
+        
+        // Set default color if colors are available
+        if (this.product.colors && this.product.colors.length > 0) {
+          this.selectedColor = this.product.colors[0];
+        }
+        
         this.loadRelatedProducts(product.category);
       } else {
         this.router.navigate(['/']);
       }
     });
+  }
+
+  calculateOriginalPrice(currentPrice: number, discountPercentage: number): number {
+    return currentPrice / (1 - discountPercentage / 100);
   }
 
   loadRelatedProducts(category: string): void {
@@ -83,28 +111,54 @@ export class ProductViewComponent implements OnInit {
     this.selectedImageIndex = index;
   }
 
+  incrementQuantity(): void {
+    this.selectedQuantity += 1;
+  }
+
+  decrementQuantity(): void {
+    if (this.selectedQuantity > 1) {
+      this.selectedQuantity -= 1;
+    }
+  }
+
   addToCart(): void {
-    if (this.product && this.selectedSize) {
+    if (this.product && (this.selectedSize || !this.product.sizes || this.product.sizes.length === 0)) {
       const productToAdd = { ...this.product };
-      productToAdd.selectedSize = this.selectedSize;
+      
+      if (this.product.sizes && this.product.sizes.length > 0) {
+        productToAdd.selectedSize = this.selectedSize;
+      }
+      
+      if (this.product.colors && this.product.colors.length > 0) {
+        productToAdd.selectedColor = this.selectedColor;
+      }
+      
       productToAdd.quantity = this.selectedQuantity;
       
       this.cartService.addToCart(productToAdd);
       this.snackBar.open('Product added to cart', 'Close', { duration: 3000 });
-    } else if (!this.selectedSize && this.product) {
+    } else if (this.product && this.product.sizes && this.product.sizes.length > 0 && !this.selectedSize) {
       this.snackBar.open('Please select a size', 'Close', { duration: 3000 });
     }
   }
 
   buyNow(): void {
-    if (this.product && this.selectedSize) {
+    if (this.product && (this.selectedSize || !this.product.sizes || this.product.sizes.length === 0)) {
       const productToAdd = { ...this.product };
-      productToAdd.selectedSize = this.selectedSize;
+      
+      if (this.product.sizes && this.product.sizes.length > 0) {
+        productToAdd.selectedSize = this.selectedSize;
+      }
+      
+      if (this.product.colors && this.product.colors.length > 0) {
+        productToAdd.selectedColor = this.selectedColor;
+      }
+      
       productToAdd.quantity = this.selectedQuantity;
       
-      this.cartService.addToCart(productToAdd);
-      this.router.navigate(['/checkout']);
-    } else if (!this.selectedSize && this.product) {
+      // Use the checkout service to initiate the checkout process
+      this.checkoutService.initiateCheckout(productToAdd);
+    } else if (this.product && this.product.sizes && this.product.sizes.length > 0 && !this.selectedSize) {
       this.snackBar.open('Please select a size', 'Close', { duration: 3000 });
     }
   }

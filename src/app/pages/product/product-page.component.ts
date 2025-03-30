@@ -4,7 +4,9 @@ import { Product, ProductFilter } from '../../models/product-page.model';
 import { Observable, Subject, takeUntil, catchError, of } from 'rxjs';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { CheckoutService } from '../../services/checkout.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -13,7 +15,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductFilterComponent } from './filter/product-filter.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-page',
@@ -42,11 +43,12 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   currentFilter: ProductFilter = {};
 
   constructor(
-    private productService: ProductService,
-    private wishlistService: WishlistService,
-    private cartService: CartService,
-    private snackBar: MatSnackBar,
-    private router: Router
+    protected productService: ProductService,
+    protected wishlistService: WishlistService,
+    protected cartService: CartService,
+    protected checkoutService: CheckoutService,
+    protected snackBar: MatSnackBar,
+    protected router: Router
   ) {
     this.products$ = this.productService.getProducts().pipe(
       takeUntil(this.destroy$),
@@ -65,22 +67,10 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   toggleFilterSidebar() {
     this.isFilterSidebarOpen = !this.isFilterSidebarOpen;
-    
-    // Prevent scrolling when filter sidebar is open on mobile
-    if (this.isFilterSidebarOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
   }
 
   applyFilters(filter: ProductFilter) {
     try {
-      // Keep the category filter if it's set
-      if (this.category) {
-        filter.categories = [this.category];
-      }
-      
       this.currentFilter = { ...this.currentFilter, ...filter };
       this.productService.applyFilter(this.currentFilter);
     } catch (error) {
@@ -119,10 +109,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewProduct(productId: string) {
-    this.router.navigate(['/product', productId]);
-  }
-
   isInWishlist(productId: string): boolean {
     return this.wishlistService.isInWishlist(productId);
   }
@@ -149,11 +135,20 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  viewProduct(productId: string) {
+    this.router.navigate(['/product', productId]);
+  }
+
+  buyNow(product: Product) {
+    try {
+      this.checkoutService.initiateCheckout(product);
+    } catch (error) {
+      this.showErrorMessage('Error processing checkout');
+    }
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    
-    // Reset body overflow in case component is destroyed while filter is open
-    document.body.style.overflow = '';
   }
 }

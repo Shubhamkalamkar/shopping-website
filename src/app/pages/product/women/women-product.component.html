@@ -20,19 +20,27 @@
     <div class="product-grid-container">
       <div class="product-grid">
         <div class="product-card" *ngFor="let product of products$ | async">
-          <div class="product-image">
+          <div class="product-image" (click)="viewProduct(product.id)">
             <img [src]="product.images[0]" [alt]="product.name" class="primary-image">
-            <button class="wishlist-btn" (click)="toggleWishlist(product)" [class.active]="isInWishlist(product.id)">
+            <button class="wishlist-btn" (click)="toggleWishlist(product); $event.stopPropagation();" [class.active]="isInWishlist(product.id)">
               <mat-icon>{{ isInWishlist(product.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
             </button>
           </div>
           <div class="product-info">
-            <h3 class="product-title">{{ product.name }}</h3>
+            <h3 class="product-title" (click)="viewProduct(product.id)">{{ product.name }}</h3>
             <p class="product-description">{{ product.description }}</p>
             <p class="product-price">₹{{ product.price | number:'1.2-2' }}</p>
-            <button mat-button class="add-to-cart" (click)="addToCart(product)" [disabled]="!product.inStock">
-              {{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}
-            </button>
+            <div class="product-buttons">
+              <button mat-button class="add-to-cart" (click)="addToCart(product)" [disabled]="!product.inStock">
+                {{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}
+              </button>
+              <button mat-button class="buy-now" (click)="buyNow(product)" [disabled]="!product.inStock">
+                Buy Now
+              </button>
+              <button mat-button class="view-product" (click)="viewProduct(product.id)">
+                View Details
+              </button>
+            </div>
           </div>
         </div>
       </div>
