@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleMobileMenu(): void {
-    this.sidebarService.toggleSidebar();
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
   onClickOutside(): void {

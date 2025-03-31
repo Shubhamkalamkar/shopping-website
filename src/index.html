@@ -9,8 +9,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#000000',
+              50: '#f8f9fa',
+              100: '#e9ecef',
+              200: '#dee2e6',
+              300: '#ced4da',
+              400: '#adb5bd',
+              500: '#6c757d',
+              600: '#495057',
+              700: '#343a40',
+              800: '#212529',
+              900: '#000000',
+            },
+            accent: {
+              DEFAULT: '#dc3545',
+              light: '#e35d6a',
+              dark: '#bd2130',
+            },
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            heading: ['Oswald', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>
+  <!-- Preline UI library -->
+  <script src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"></script>
+  <script>
+    // Initialize Preline UI components
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        if (typeof HSStaticMethods !== 'undefined') {
+          HSStaticMethods.autoInit();
+        }
+      }, 100);
+    });
+  </script>
 </body>
 </html>

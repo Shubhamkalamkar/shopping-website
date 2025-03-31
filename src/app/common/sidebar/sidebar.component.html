@@ -1,42 +1,118 @@
-<div class="sidebar" [@sidebarState]="getAnimationState()">
-  <div class="sidebar-header">
-    <h2>MENU</h2>
-    <button class="close-btn" (click)="toggleSidebar()">
-      <mat-icon>close</mat-icon>
+<div 
+  class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto"
+  [ngClass]="{'translate-x-0': isOpen, '-translate-x-full': !isOpen}"
+  [@sidebarState]="getAnimationState()"
+>
+  <!-- Sidebar Header -->
+  <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 bg-accent rounded-sm flex items-center justify-center">
+        <svg viewBox="0 0 100 100" class="w-6 h-6 fill-current text-white">
+          <path d="M50 5L95 30L85 85L50 95L15 85L5 30L50 5ZM50 20L20 35L25 70L50 80L75 70L80 35L50 20ZM50 35L65 45L60 65L50 70L40 65L35 45L50 35Z"/>
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white">AHARON BETH </h2>
+    </div>
+    <button 
+      class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none" 
+      (click)="toggleSidebar()"
+      aria-label="Close menu"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
     </button>
   </div>
   
-  <div class="sidebar-content">
-    <div class="mobile-user-actions">
-      <button mat-icon-button class="action-btn">
-        <mat-icon>search</mat-icon>
+  <!-- Mobile User Actions -->
+  <div class="p-4 border-b border-gray-200 dark:border-gray-800">
+    <div class="flex justify-around">
+      <button 
+        class="p-2 text-gray-500 hover:text-accent dark:text-gray-400 dark:hover:text-accent rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none" 
+        aria-label="Search"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
       </button>
-      <button mat-icon-button class="action-btn" routerLink="/account">
-        <mat-icon>person_outline</mat-icon>
+      <button 
+        class="p-2 text-gray-500 hover:text-accent dark:text-gray-400 dark:hover:text-accent rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none" 
+        routerLink="/account"
+        aria-label="Account"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+        </svg>
       </button>
-      <button mat-icon-button class="action-btn" routerLink="/wishlist">
-        <mat-icon>favorite_border</mat-icon>
+      <button 
+        class="p-2 text-gray-500 hover:text-accent dark:text-gray-400 dark:hover:text-accent rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none" 
+        routerLink="/wishlist"
+        aria-label="Wishlist"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
       </button>
-      <button mat-icon-button class="action-btn" routerLink="/cart">
-        <mat-icon>shopping_bag</mat-icon>
+      <button 
+        class="p-2 text-gray-500 hover:text-accent dark:text-gray-400 dark:hover:text-accent rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none relative" 
+        routerLink="/cart"
+        aria-label="Cart"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <span class="absolute -top-1 -right-1 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-accent rounded-full">3</span>
       </button>
     </div>
-    <ul class="category-list">
+  </div>
+  
+  <!-- Categories -->
+  <div class="p-4">
+    <h3 class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mb-4">Categories</h3>
+    <ul class="space-y-2">
       <li *ngFor="let category of categories" 
-          class="category-item" 
+          class="group cursor-pointer" 
           (click)="navigateToCategory(category.id)">
-        <mat-icon>{{category.icon}}</mat-icon>
-        {{category.name}}
+        <div class="flex items-center py-2 px-3 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 group-hover:text-accent transition-colors">
+          <svg class="w-5 h-5 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path *ngIf="category.icon === 'checkroom'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            <path *ngIf="category.icon === 'woman'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            <path *ngIf="category.icon === 'child_care'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+            <path *ngIf="category.icon === 'watch'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <path *ngIf="category.icon === 'card_giftcard'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112.83 1.83"></path>
+          </svg>
+          <span class="font-medium">{{ category.name }}</span>
+        </div>
       </li>
     </ul>
   </div>
-
-  <div class="account-section">
-    <button class="account-btn" routerLink="/account">
-      <mat-icon>person_outline</mat-icon>
-      ACCOUNT
-    </button>
+  
+  <!-- Account Section -->
+  <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800">
+    <a 
+      routerLink="/account" 
+      class="flex items-center py-3 px-4 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-accent transition-colors"
+    >
+      <svg class="w-5 h-5 mr-3 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+      </svg>
+      <span class="font-medium">My Account</span>
+    </a>
+    <a 
+      href="#" 
+      class="flex items-center py-3 px-4 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-accent transition-colors mt-2"
+    >
+      <svg class="w-5 h-5 mr-3 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+      </svg>
+      <span class="font-medium">Sign Out</span>
+    </a>
   </div>
 </div>
 
-<div class="sidebar-overlay" [class.show]="isOpen" (click)="toggleSidebar()"></div>
+<!-- Sidebar Overlay -->
+<div 
+  class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300" 
+  [ngClass]="{'opacity-100 pointer-events-auto': isOpen, 'opacity-0 pointer-events-none': !isOpen}"
+  (click)="toggleSidebar()"
+></div>

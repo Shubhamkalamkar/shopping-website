@@ -1,57 +1,271 @@
-<div class="product-page">
-  <div class="page-header">
-    <h1>{{ pageTitle }}</h1>
-    <button class="refine-button" (click)="toggleFilterSidebar()">⌘ REFINE</button>
-  </div>
-
-  <div class="product-content">
-    <!-- Filter Sidebar -->
-    <div class="filter-sidebar" [class.active]="isFilterSidebarOpen">
-      <div class="filter-sidebar-header">
-        <h3>Filters</h3>
-        <button class="close-filter" (click)="toggleFilterSidebar()">
-          <mat-icon>close</mat-icon>
+<div class="bg-gray-50 dark:bg-gray-900">
+  <!-- Page Header -->
+  <div class="container-custom py-8">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ pageTitle }}</h1>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-semibold">{{ (products$ | async)?.length || 0 }}</span> products</p>
+      </div>
+      <div class="flex items-center space-x-3 mt-4 md:mt-0">
+        <div class="relative">
+          <select class="py-2 px-4 pr-8 border border-gray-300 rounded-lg text-sm focus:border-accent focus:ring-accent bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white appearance-none">
+            <option>Sort by: Featured</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Newest First</option>
+            <option>Best Selling</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+        <button 
+          class="py-2 px-4 bg-white border border-gray-300 rounded-lg text-sm font-medium flex items-center space-x-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 transition-colors" 
+          (click)="toggleFilterSidebar()"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+          </svg>
+          <span>Filter</span>
         </button>
       </div>
-      <app-product-filter (filterChange)="applyFilters($any($event))"></app-product-filter>
     </div>
+  </div>
 
-    <!-- Product Grid -->
-    <div class="product-grid-container">
-      <div class="product-grid">
-        <div class="product-card" *ngFor="let product of products$ | async">
-          <div class="product-image" (click)="viewProduct(product.id)">
-            <img [src]="product.images[0]" [alt]="product.name" class="primary-image">
-            <button class="wishlist-btn" (click)="toggleWishlist(product); $event.stopPropagation();" [class.active]="isInWishlist(product.id)">
-              <mat-icon>{{ isInWishlist(product.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
-            </button>
-          </div>
-          <div class="product-info">
-            <h3 class="product-title" (click)="viewProduct(product.id)">{{ product.name }}</h3>
-            <p class="product-description">{{ product.description }}</p>
-            <p class="product-price">₹{{ product.price | number:'1.2-2' }}</p>
-            <div class="product-buttons">
-              <button mat-button class="add-to-cart" (click)="addToCart(product)" [disabled]="!product.inStock">
-                {{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}
-              </button>
-              <button mat-button class="buy-now" (click)="buyNow(product)" [disabled]="!product.inStock">
-                Buy Now
-              </button>
-              <button mat-button class="view-product" (click)="viewProduct(product.id)">
-                View Details
-              </button>
-            </div>
-          </div>
+  <div class="container-custom pb-16">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Filter Sidebar -->
+      <div 
+        class="lg:w-1/4 fixed lg:relative inset-0 z-40 bg-white dark:bg-gray-900 p-6 overflow-y-auto transition-transform duration-300 ease-in-out transform lg:transform-none lg:translate-x-0 shadow-xl lg:shadow-none"
+        [class.translate-x-0]="isFilterSidebarOpen"
+        [class.-translate-x-full]="!isFilterSidebarOpen"
+      >
+        <div class="flex justify-between items-center mb-6 lg:hidden">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Filters</h3>
+          <button 
+            class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white focus:outline-none" 
+            (click)="toggleFilterSidebar()"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="hidden lg:block mb-6">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Filters</h3>
+          <button 
+            class="text-sm text-accent hover:text-accent-dark flex items-center space-x-1 focus:outline-none"
+          >
+            <span>Clear all</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <app-product-filter (filterChange)="applyFilters($any($event))"></app-product-filter>
+        
+        <div class="mt-8 lg:hidden">
+          <button 
+            class="w-full py-3 px-4 bg-accent hover:bg-accent-dark text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+            (click)="toggleFilterSidebar()"
+          >
+            Apply Filters
+          </button>
         </div>
       </div>
 
-      <div class="no-products" *ngIf="(products$ | async)?.length === 0">
-        <mat-icon>inventory_2</mat-icon>
-        <p>No products found</p>
+      <!-- Product Grid -->
+      <div class="lg:w-3/4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Product Card -->
+          <div 
+            class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-full" 
+            *ngFor="let product of products$ | async"
+          >
+            <!-- Product Image -->
+            <div class="relative overflow-hidden">
+              <!-- Badge -->
+              <div class="absolute top-3 left-3 z-10" *ngIf="product.isNew">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent text-white">
+                  New
+                </span>
+              </div>
+              
+              <!-- Sale Badge -->
+              <div class="absolute top-3 right-3 z-10" *ngIf="product.discount">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500 text-white">
+                  -{{ product.discount }}%
+                </span>
+              </div>
+              
+              <!-- Wishlist Button -->
+              <button 
+                class="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-white/80 backdrop-blur-sm text-gray-700 hover:text-accent transition-colors focus:outline-none" 
+                (click)="toggleWishlist(product); $event.stopPropagation();"
+                [class.text-accent]="isInWishlist(product.id)"
+                *ngIf="!product.discount"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path 
+                    [attr.d]="isInWishlist(product.id) ? 
+                      'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' : 
+                      'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'"
+                    [attr.fill]="isInWishlist(product.id) ? 'currentColor' : 'none'"
+                    [attr.stroke]="isInWishlist(product.id) ? 'none' : 'currentColor'"
+                    stroke-width="1.5"
+                  ></path>
+                </svg>
+              </button>
+              
+              <!-- Product Image -->
+              <div 
+                class="aspect-w-4 aspect-h-5 cursor-pointer" 
+                (click)="viewProduct(product.id)"
+              >
+                <img 
+                  [src]="product.images[0]" 
+                  [alt]="product.name" 
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500"
+                >
+              </div>
+              
+              <!-- Quick Actions -->
+              <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="flex justify-center space-x-2">
+                  <button 
+                    class="p-2 bg-white rounded-full text-gray-800 hover:text-accent transition-colors focus:outline-none" 
+                    title="Quick view"
+                    (click)="viewProduct(product.id)"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                  </button>
+                  <button 
+                    class="p-2 bg-white rounded-full text-gray-800 hover:text-accent transition-colors focus:outline-none" 
+                    title="Add to cart"
+                    (click)="addToCart(product); $event.stopPropagation();"
+                    [disabled]="!product.inStock"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="p-4 flex flex-col flex-grow">
+              <!-- Product Category -->
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ product.category }}</p>
+              
+              <!-- Product Title -->
+              <h3 
+                class="text-base font-medium text-gray-900 dark:text-white mb-2 hover:text-accent transition-colors cursor-pointer" 
+                (click)="viewProduct(product.id)"
+              >
+                {{ product.name }}
+              </h3>
+              
+              <!-- Product Rating -->
+              <div class="flex items-center mb-2">
+                <div class="flex">
+                  <svg *ngFor="let i of [1,2,3,4,5]" class="w-4 h-4" [ngClass]="{'text-yellow-400': i <= (product.rating || 0), 'text-gray-300 dark:text-gray-600': i > (product.rating || 0)}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">({{ product.reviews || 0 }})</span>
+              </div>
+              
+              <!-- Product Description -->
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{{ product.description }}</p>
+              
+              <!-- Product Price -->
+              <div class="mt-auto">
+                <div class="flex items-center space-x-2">
+                  <p class="text-lg font-bold text-gray-900 dark:text-white">₹{{ product.price | number:'1.2-2' }}</p>
+                  <p class="text-sm text-gray-500 line-through" *ngIf="product.originalPrice">₹{{ product.originalPrice | number:'1.2-2' }}</p>
+                </div>
+                
+                <!-- Stock Status -->
+                <div class="flex items-center mt-2">
+                  <span 
+                    class="inline-block w-2 h-2 rounded-full mr-2" 
+                    [ngClass]="{'bg-green-500': product.inStock, 'bg-red-500': !product.inStock}"
+                  ></span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400">{{ product.inStock ? 'In stock' : 'Out of stock' }}</span>
+                </div>
+                
+                <!-- Add to Cart Button -->
+                <button 
+                  class="w-full mt-4 py-2 px-4 bg-accent hover:bg-accent-dark text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-accent" 
+                  (click)="addToCart(product)" 
+                  [disabled]="!product.inStock"
+                >
+                  {{ product.inStock ? 'Add to Cart' : 'Out of Stock' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Empty State -->
+        <div 
+          class="flex flex-col items-center justify-center py-16 px-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm mt-6" 
+          *ngIf="(products$ | async)?.length === 0"
+        >
+          <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No products found</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">We couldn't find any products matching your criteria.</p>
+          <button 
+            class="py-2 px-4 bg-accent hover:bg-accent-dark text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+            (click)="clearFilters()"
+          >
+            Clear Filters
+          </button>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="flex justify-center mt-12">
+          <nav class="flex items-center space-x-1">
+            <button class="p-2 rounded-md text-gray-500 hover:text-accent hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+              <span class="sr-only">Previous</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+            <button class="px-3 py-1.5 text-sm font-medium rounded-md bg-accent text-white focus:outline-none">1</button>
+            <button class="px-3 py-1.5 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">2</button>
+            <button class="px-3 py-1.5 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">3</button>
+            <span class="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400">...</span>
+            <button class="px-3 py-1.5 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">8</button>
+            <button class="p-2 rounded-md text-gray-500 hover:text-accent hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+              <span class="sr-only">Next</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
-
+  
   <!-- Overlay for mobile filter -->
-  <div class="filter-overlay" *ngIf="isFilterSidebarOpen" (click)="toggleFilterSidebar()"></div>
+  <div 
+    class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden transition-opacity duration-300" 
+    [class.opacity-100]="isFilterSidebarOpen"
+    [class.opacity-0]="!isFilterSidebarOpen"
+    [class.pointer-events-auto]="isFilterSidebarOpen"
+    [class.pointer-events-none]="!isFilterSidebarOpen"
+    (click)="toggleFilterSidebar()"
+  ></div>
 </div>

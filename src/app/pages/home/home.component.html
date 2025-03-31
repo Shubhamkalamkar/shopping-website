@@ -3,47 +3,123 @@
  
 
   <!-- Hero Section with Video -->
-  <section class="hero-section">
-    <video #heroVideo autoplay muted loop playsinline class="hero-video" preload="auto">
-      <source src="assets/videos/hero-video.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div class="hero-content">
-      <h1 style="font-family: 'ga'">AHARON BETH</h1>
-      <p>CONTEMPORARY FASHION</p>
-      <a href="#shop" class="cta-button">SHOP NOW</a>
+  <section class="relative overflow-hidden">
+    <!-- Video Background -->
+    <div class="absolute inset-0 w-full h-full bg-black">
+      <video #heroVideo autoplay muted loop playsinline class="object-cover w-full h-full opacity-70" preload="auto">
+        <source src="assets/videos/hero-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 px-4 py-32 mx-auto text-center text-white sm:px-6 lg:px-8 min-h-[85vh] flex flex-col items-center justify-center">
+      <!-- Brand Logo -->
+      <div class="w-24 h-24 mx-auto mb-8">
+        <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-white">
+          <path d="M50 5L95 30L85 85L50 95L15 85L5 30L50 5ZM50 20L20 35L25 70L50 80L75 70L80 35L50 20ZM50 35L65 45L60 65L50 70L40 65L35 45L50 35Z"/>
+        </svg>
+      </div>
+      
+      <h1 class="mb-6 text-5xl font-bold tracking-wider uppercase md:text-6xl lg:text-7xl font-heading">AHARON BETH </h1>
+      <p class="max-w-lg mx-auto mb-10 text-xl tracking-wide">BOLD DESIGNS FOR THE MODERN WARRIOR</p>
+      
+      <!-- CTA Buttons -->
+      <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center">
+        <a href="#shop" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-accent hover:bg-accent-dark transition-colors duration-300 rounded-sm">
+          SHOP NOW
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
+        <a href="#collection" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-transparent border border-white hover:bg-white hover:text-black transition-colors duration-300 rounded-sm">
+          EXPLORE COLLECTION
+        </a>
+      </div>
+      
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
     </div>
   </section>
 
   <!-- Categories Section -->
-  <section class="categories-section">
-    <div class="container">
-      <div class="categories-grid">
-        <div class="category-card">
-          <div class="category-image">
-            <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Men's Collection">
-            <div class="category-overlay">
-              <h3>MEN</h3>
-              <a [routerLink]="['/products/men']" class="category-link">SHOP NOW</a>
-            </div>
+  <section id="shop" class="py-16 bg-gray-100">
+    <div class="container-custom">
+      <!-- Section Header -->
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold uppercase tracking-wider font-heading">Shop By Category</h2>
+        <div class="w-24 h-1 mx-auto bg-accent"></div>
+      </div>
+      
+      <!-- Categories Grid -->
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Men Category -->
+        <div class="group relative overflow-hidden rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl bg-white">
+          <div class="aspect-w-4 aspect-h-5 w-full overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" 
+              alt="Men's Collection"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-90"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+            <h3 class="mb-2 text-2xl font-bold uppercase tracking-wider font-heading">Men</h3>
+            <p class="mb-4 text-sm text-gray-300">Bold designs for the modern man</p>
+            <a [routerLink]="['/products/men']" class="inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-black bg-white hover:bg-gray-200 transition-colors duration-300 rounded-sm">
+              SHOP NOW
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
           </div>
         </div>
-        <div class="category-card">
-          <div class="category-image">
-            <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80" alt="Women's Collection">
-            <div class="category-overlay">
-              <h3>WOMEN</h3>
-              <a [routerLink]="['/products/women']" class="category-link">SHOP NOW</a>
-            </div>
+
+        <!-- Women Category -->
+        <div class="group relative overflow-hidden rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl bg-white">
+          <div class="aspect-w-4 aspect-h-5 w-full overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80" 
+              alt="Women's Collection"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-90"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+            <h3 class="mb-2 text-2xl font-bold uppercase tracking-wider font-heading">Women</h3>
+            <p class="mb-4 text-sm text-gray-300">Elegant designs with an edge</p>
+            <a [routerLink]="['/products/women']" class="inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-black bg-white hover:bg-gray-200 transition-colors duration-300 rounded-sm">
+              SHOP NOW
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
           </div>
         </div>
-        <div class="category-card">
-          <div class="category-image">
-            <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=840&q=80" alt="Gifts Collection">
-            <div class="category-overlay">
-              <h3>GIFTS</h3>
-              <a [routerLink]="['/products/gifting']" class="category-link">SHOP NOW</a>
-            </div>
+
+        <!-- Gifts Category -->
+        <div class="group relative overflow-hidden rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl bg-white">
+          <div class="aspect-w-4 aspect-h-5 w-full overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=840&q=80" 
+              alt="Gifts Collection"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-90"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+            <h3 class="mb-2 text-2xl font-bold uppercase tracking-wider font-heading">Gifts</h3>
+            <p class="mb-4 text-sm text-gray-300">Unique presents for special occasions</p>
+            <a [routerLink]="['/products/gifting']" class="inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-black bg-white hover:bg-gray-200 transition-colors duration-300 rounded-sm">
+              SHOP NOW
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -51,152 +127,874 @@
   </section>
 
   <!-- Featured Products Section -->
-  <section class="featured-products">
-    <div class="container">
-      <h2 class="section-title">FEATURED PRODUCTS</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1559563458-527698bf5295?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Silk Blouse">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <!-- Section Header -->
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold uppercase tracking-wider font-heading">Featured Products</h2>
+        <div class="w-24 h-1 mx-auto bg-accent"></div>
+      </div>
+      
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Product 1 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-accent text-white">New</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1559563458-527698bf5295?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+              alt="Silk Blouse"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">SILK BLOUSE</h3>
-            <p class="product-price">$129.00</p>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80" alt="Palazzo Pants">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Silk Blouse</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$129.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.5</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">PALAZZO PANTS</h3>
-            <p class="product-price">$149.00</p>
-          </div>
         </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1564257631407-4deb1f99d992?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="Silk Blouse Alternate">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+        
+        <!-- Product 2 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-gray-800 text-white">Best Seller</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80" 
+              alt="Palazzo Pants"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">SILK BLOUSE - WHITE</h3>
-            <p class="product-price">$129.00</p>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1551854838-212c50b4c184?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="Palazzo Pants Alternate">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Palazzo Pants</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$149.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.8</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">PALAZZO PANTS - BLACK</h3>
-            <p class="product-price">$149.00</p>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1564257631407-4deb1f99d992?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" 
+              alt="Silk Blouse - White"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
+            </div>
+          </div>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Silk Blouse - White</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$129.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.3</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        
+        <!-- Product 4 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-accent text-white">Sale</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1551854838-212c50b4c184?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" 
+              alt="Palazzo Pants - Black"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
+            </div>
+          </div>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Palazzo Pants - Black</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <p class="text-lg font-bold">$129.00</p>
+                <p class="text-sm text-gray-500 line-through">$149.00</p>
+              </div>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.7</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View All Button -->
+      <div class="mt-12 text-center">
+        <a href="#" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-black hover:bg-gray-900 transition-colors duration-300 rounded-sm">
+          View All Products
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Collection Section -->
-  <section class="collection-section">
-    <div class="collection-image">
-      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Collection Image">
+  <section id="collection" class="relative py-20 bg-black text-white overflow-hidden">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+        alt="Collection Background" 
+        class="object-cover w-full h-full opacity-50"
+      >
+      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
     </div>
-    <div class="collection-content">
-      <h2>NEW COLLECTION</h2>
-      <p>Explore our latest designs crafted with premium materials and attention to detail.</p>
-      <a href="#" class="collection-button">SHOP COLLECTION</a>
+    
+    <!-- Content -->
+    <div class="container-custom relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="max-w-xl">
+          <!-- Section Label -->
+          <div class="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wider text-black uppercase bg-white rounded-sm">
+            Limited Edition
+          </div>
+          
+          <!-- Heading -->
+          <h2 class="mb-6 text-4xl font-bold uppercase tracking-wider md:text-5xl font-heading">
+            The Edge Collection
+          </h2>
+          
+          <!-- Description -->
+          <p class="mb-8 text-lg text-gray-300">
+            Explore our latest designs crafted with premium materials and uncompromising attention to detail. Bold silhouettes and innovative textures define this season's standout pieces.
+          </p>
+          
+          <!-- Features List -->
+          <ul class="mb-10 space-y-4">
+            <li class="flex items-center">
+              <svg class="w-5 h-5 mr-3 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span>Premium sustainable materials</span>
+            </li>
+            <li class="flex items-center">
+              <svg class="w-5 h-5 mr-3 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span>Limited edition designs</span>
+            </li>
+            <li class="flex items-center">
+              <svg class="w-5 h-5 mr-3 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span>Handcrafted with precision</span>
+            </li>
+          </ul>
+          
+          <!-- CTA Button -->
+          <a href="#" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-black bg-white hover:bg-gray-200 transition-colors duration-300 rounded-sm">
+            EXPLORE COLLECTION
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </a>
+        </div>
+        
+        <!-- Collection Image -->
+        <div class="relative hidden lg:block">
+          <div class="relative overflow-hidden rounded-sm shadow-2xl aspect-w-3 aspect-h-4">
+            <img 
+              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=420&q=80" 
+              alt="Collection Featured Item" 
+              class="object-cover w-full h-full"
+            >
+            
+            <!-- Price Tag -->
+            <div class="absolute bottom-6 right-6 px-4 py-2 bg-black text-white">
+              <span class="block text-sm">Starting at</span>
+              <span class="text-xl font-bold">$199</span>
+            </div>
+          </div>
+          
+          <!-- Decorative Elements -->
+          <div class="absolute -bottom-4 -left-4 w-24 h-24 bg-accent"></div>
+          <div class="absolute -top-4 -right-4 w-32 h-32 border-2 border-white"></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- New Arrivals Section -->
-  <section class="new-arrivals">
-    <div class="container">
-      <h2 class="section-title">NEW ARRIVALS</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80" alt="Casual Shirt">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+  <section class="py-16 bg-gray-100">
+    <div class="container-custom">
+      <!-- Section Header with Tabs -->
+      <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+        <div class="mb-6 md:mb-0">
+          <h2 class="text-3xl font-bold uppercase tracking-wider font-heading mb-2">New Arrivals</h2>
+          <div class="w-24 h-1 bg-accent"></div>
+        </div>
+        
+        <!-- Category Tabs -->
+        <div class="flex flex-wrap justify-center gap-2">
+          <button class="px-4 py-2 text-sm font-medium uppercase tracking-wider bg-black text-white rounded-sm">All</button>
+          <button class="px-4 py-2 text-sm font-medium uppercase tracking-wider bg-white text-gray-700 hover:bg-gray-200 transition-colors duration-300 rounded-sm">Men</button>
+          <button class="px-4 py-2 text-sm font-medium uppercase tracking-wider bg-white text-gray-700 hover:bg-gray-200 transition-colors duration-300 rounded-sm">Women</button>
+          <button class="px-4 py-2 text-sm font-medium uppercase tracking-wider bg-white text-gray-700 hover:bg-gray-200 transition-colors duration-300 rounded-sm">Accessories</button>
+        </div>
+      </div>
+      
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Product 1 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-accent text-white">New</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80" 
+              alt="Casual Linen Shirt"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">CASUAL LINEN SHIRT</h3>
-            <p class="product-price">$89.00</p>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Casual Linen Shirt</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$89.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.8</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=420&q=80" alt="Summer Dress">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+        
+        <!-- Product 2 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-accent text-white">New</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=420&q=80" 
+              alt="Summer Dress"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">SUMMER DRESS</h3>
-            <p class="product-price">$119.00</p>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Summer Dress</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$119.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.6</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80" alt="Leather Bag">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+        
+        <!-- Product 3 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-accent text-white">New</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80" 
+              alt="Leather Bag"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">LEATHER BAG</h3>
-            <p class="product-price">$199.00</p>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Leather Bag</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$199.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.9</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80" alt="Sunglasses">
-            <div class="product-overlay">
-              <button class="quick-add">QUICK ADD</button>
+        
+        <!-- Product 4 -->
+        <div class="group relative overflow-hidden bg-white rounded-sm shadow-md transition-all duration-300 hover:shadow-xl">
+          <!-- Badges -->
+          <div class="absolute top-4 left-4 z-10">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-accent text-white">New</span>
+          </div>
+          
+          <!-- Wishlist Button -->
+          <button class="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-white/80 text-gray-800 hover:bg-accent hover:text-white transition-colors duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Product Image -->
+          <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80" 
+              alt="Designer Sunglasses"
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+            >
+            
+            <!-- Quick Add Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-100">
+              <button class="px-4 py-2 bg-black text-white text-sm font-medium uppercase tracking-wider hover:bg-accent transition-colors duration-300 rounded-sm">
+                Quick Add
+              </button>
             </div>
           </div>
-          <div class="product-info">
-            <h3 class="product-title">DESIGNER SUNGLASSES</h3>
-            <p class="product-price">$99.00</p>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <h3 class="text-lg font-medium uppercase tracking-wider">Designer Sunglasses</h3>
+            <div class="mt-1 flex items-center justify-between">
+              <p class="text-lg font-bold">$99.00</p>
+              <div class="flex items-center">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-sm text-gray-600">4.7</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View All Button -->
+      <div class="mt-12 text-center">
+        <a href="#" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-black hover:bg-gray-900 transition-colors duration-300 rounded-sm">
+          View All New Arrivals
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-20 bg-white">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- About Content -->
+        <div>
+          <!-- Section Label -->
+          <div class="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wider text-white uppercase bg-black rounded-sm">
+            Our Story
+          </div>
+          
+          <!-- Heading -->
+          <h2 class="mb-6 text-4xl font-bold uppercase tracking-wider font-heading">
+            About AHARON BETH 
+          </h2>
+          
+          <!-- Divider -->
+          <div class="w-24 h-1 mb-8 bg-accent"></div>
+          
+          <!-- Description -->
+          <div class="space-y-4 text-gray-700">
+            <p class="text-lg">
+              Contemporary fashion for the modern individual with an edge. Our pieces are crafted with precision and attention to detail, using only the finest materials.
+            </p>
+            <p>
+              We believe in creating bold designs that make a statement while maintaining timeless appeal. Each collection is a careful balance of innovation and wearability, designed for those who dare to stand out.
+            </p>
+            <p>
+              Founded in 2020, AHARON BETH  has quickly established itself as a brand that pushes boundaries while maintaining exceptional quality and ethical production standards.
+            </p>
+          </div>
+          
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-4 mt-10 mb-8">
+            <div class="text-center">
+              <p class="text-3xl font-bold text-black">50+</p>
+              <p class="text-sm text-gray-600 uppercase">Designers</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold text-black">12</p>
+              <p class="text-sm text-gray-600 uppercase">Countries</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold text-black">25k+</p>
+              <p class="text-sm text-gray-600 uppercase">Customers</p>
+            </div>
+          </div>
+          
+          <!-- CTA Button -->
+          <a href="#" class="inline-flex items-center justify-center px-8 py-3 mt-4 text-base font-medium text-white bg-black hover:bg-gray-900 transition-colors duration-300 rounded-sm">
+            LEARN MORE
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </a>
+        </div>
+        
+        <!-- About Images -->
+        <div class="relative">
+          <!-- Main Image -->
+          <div class="relative z-10 overflow-hidden rounded-sm shadow-xl">
+            <img 
+              src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80" 
+              alt="About AHARON BETH " 
+              class="object-cover w-full h-full"
+            >
+          </div>
+          
+          <!-- Secondary Image -->
+          <div class="absolute -bottom-8 -left-8 z-0 w-64 h-64 overflow-hidden rounded-sm shadow-xl hidden md:block">
+            <img 
+              src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80" 
+              alt="AHARON BETH  Workshop" 
+              class="object-cover w-full h-full"
+            >
+          </div>
+          
+          <!-- Decorative Element -->
+          <div class="absolute -top-8 -right-8 w-40 h-40 border-2 border-accent hidden md:block"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto bg-white rounded-sm shadow-lg overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <!-- Image Side -->
+          <div class="relative hidden md:block">
+            <img 
+              src="https://images.unsplash.com/photo-1551854838-212c50b4c184?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" 
+              alt="Newsletter Image" 
+              class="object-cover w-full h-full"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+              <div class="text-white">
+                <p class="text-sm uppercase tracking-wider mb-1">Stay Updated</p>
+                <h3 class="text-xl font-bold font-heading">Never Miss a Drop</h3>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Form Side -->
+          <div class="p-8 md:p-10">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 mb-6">
+              <div class="w-8 h-8">
+                <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-black">
+                  <path d="M50 5L95 30L85 85L50 95L15 85L5 30L50 5ZM50 20L20 35L25 70L50 80L75 70L80 35L50 20ZM50 35L65 45L60 65L50 70L40 65L35 45L50 35Z"/>
+                </svg>
+              </div>
+              <span class="text-lg font-bold uppercase tracking-wider font-heading">AHARON BETH </span>
+            </div>
+            
+            <h2 class="text-2xl font-bold uppercase tracking-wider mb-4 font-heading">Join Our Newsletter</h2>
+            <p class="text-gray-600 mb-6">Subscribe to receive updates on new arrivals, exclusive offers, and style inspiration.</p>
+            
+            <!-- Newsletter Form -->
+            <form class="space-y-4">
+              <div>
+                <label for="newsletter-name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input 
+                  type="text" 
+                  id="newsletter-name" 
+                  placeholder="Your name" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  required
+                >
+              </div>
+              
+              <div>
+                <label for="newsletter-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input 
+                  type="email" 
+                  id="newsletter-email" 
+                  placeholder="Your email address" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  required
+                >
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input 
+                    id="newsletter-consent" 
+                    type="checkbox" 
+                    class="w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent"
+                    required
+                  >
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="newsletter-consent" class="text-gray-600">I agree to receive marketing emails and accept the <a href="#" class="text-accent hover:underline">privacy policy</a></label>
+                </div>
+              </div>
+              
+              <button 
+                type="submit" 
+                class="w-full px-6 py-3 bg-black text-white font-medium uppercase tracking-wider hover:bg-gray-900 transition-colors duration-300 rounded-sm"
+              >
+                Subscribe
+              </button>
+            </form>
+            
+            <!-- Social Proof -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+              <p class="text-sm text-gray-500 mb-2">Join our community of</p>
+              <p class="text-lg font-bold">10,000+ Fashion Enthusiasts</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="about-section">
-    <div class="about-image">
-      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80" alt="About Realism">
-    </div>
-    <div class="about-content">
-      <h2>ABOUT AHARON BETH</h2>
-      <p>Contemporary fashion for the modern individual. Our pieces are crafted with precision and attention to detail, using only the finest materials. We believe in creating timeless designs that transcend seasonal trends.</p>
-      <a href="#" class="about-button">LEARN MORE</a>
-    </div>
-  </section>
-
-  <!-- Newsletter Section -->
-  <section class="newsletter-section">
-    <div class="newsletter-content">
-      <h2>JOIN OUR NEWSLETTER</h2>
-      <p>Subscribe to receive updates on new arrivals and special promotions.</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Your email address" required>
-        <button type="submit">SUBSCRIBE</button>
-      </form>
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-white">
+    <div class="container-custom">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold uppercase tracking-wider font-heading mb-4">What Our Customers Say</h2>
+        <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto">Discover why our customers love shopping with us. Read their experiences and see why AHARON BETH  is the preferred choice for fashion enthusiasts.</p>
+      </div>
+      
+      <!-- Testimonials Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-gray-50 p-8 rounded-sm shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px]">
+          <!-- Quote Icon -->
+          <div class="mb-6 text-accent">
+            <svg class="w-10 h-10 opacity-20" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+          
+          <!-- Stars -->
+          <div class="flex items-center mb-4">
+            <div class="flex text-yellow-400">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Testimonial Content -->
+          <blockquote class="mb-6 text-gray-700 italic">
+            "I absolutely love the quality of their clothes. The attention to detail is impeccable, and the fabrics are luxurious. Will definitely be a returning customer!"
+          </blockquote>
+          
+          <!-- Author -->
+          <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+              <img 
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+                alt="Sarah J." 
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <div>
+              <h4 class="font-medium text-black">Sarah J.</h4>
+              <p class="text-sm text-gray-600">Loyal Customer</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="bg-gray-50 p-8 rounded-sm shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px]">
+          <!-- Quote Icon -->
+          <div class="mb-6 text-accent">
+            <svg class="w-10 h-10 opacity-20" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+          
+          <!-- Stars -->
+          <div class="flex items-center mb-4">
+            <div class="flex text-yellow-400">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Testimonial Content -->
+          <blockquote class="mb-6 text-gray-700 italic">
+            "The customer service is outstanding. I had an issue with my order, and they resolved it immediately. The clothes are stylish and fit perfectly."
+          </blockquote>
+          
+          <!-- Author -->
+          <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+              <img 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" 
+                alt="Michael T." 
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <div>
+              <h4 class="font-medium text-black">Michael T.</h4>
+              <p class="text-sm text-gray-600">New Customer</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="bg-gray-50 p-8 rounded-sm shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px]">
+          <!-- Quote Icon -->
+          <div class="mb-6 text-accent">
+            <svg class="w-10 h-10 opacity-20" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+          
+          <!-- Stars -->
+          <div class="flex items-center mb-4">
+            <div class="flex text-yellow-400">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Testimonial Content -->
+          <blockquote class="mb-6 text-gray-700 italic">
+            "The designs are unique and make me stand out. I've received so many compliments on my AHARON BETH  pieces. The quality is exceptional and worth every penny."
+          </blockquote>
+          
+          <!-- Author -->
+          <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+              <img 
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80" 
+                alt="Jessica R." 
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <div>
+              <h4 class="font-medium text-black">Jessica R.</h4>
+              <p class="text-sm text-gray-600">Fashion Enthusiast</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View All Reviews Button -->
+      <div class="mt-12 text-center">
+        <a href="#" class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-black bg-white border border-black hover:bg-gray-100 transition-colors duration-300 rounded-sm">
+          View All Reviews
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 

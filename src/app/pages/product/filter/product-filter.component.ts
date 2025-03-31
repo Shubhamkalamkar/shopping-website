@@ -61,7 +61,8 @@ export class ProductFilterComponent implements OnInit {
     this.filterChange.emit(filter);
   }
 
-  onCategoryChange(category: string, checked: boolean): void {
+  onCategoryChange(category: string, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
       this.selectedCategories.push(category);
     } else {
@@ -73,7 +74,8 @@ export class ProductFilterComponent implements OnInit {
     this.onFilterChange();
   }
 
-  onRatingChange(rating: number, checked: boolean): void {
+  onRatingChange(rating: number, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
       this.selectedRatings.push(rating);
     } else {
@@ -85,25 +87,58 @@ export class ProductFilterComponent implements OnInit {
     this.onFilterChange();
   }
 
-  onSizeChange(size: string, checked: boolean): void {
-    if (checked) {
-      this.selectedSizes.push(size);
-    } else {
+  onSizeChange(size: string, event: Event): void {
+    // For button clicks, toggle the selection
+    if (event.type === 'click') {
       const index = this.selectedSizes.indexOf(size);
-      if (index !== -1) {
+      if (index === -1) {
+        this.selectedSizes.push(size);
+      } else {
         this.selectedSizes.splice(index, 1);
+      }
+    } else {
+      // For checkbox events
+      const checked = (event.target as HTMLInputElement).checked;
+      if (checked) {
+        this.selectedSizes.push(size);
+      } else {
+        const index = this.selectedSizes.indexOf(size);
+        if (index !== -1) {
+          this.selectedSizes.splice(index, 1);
+        }
       }
     }
     this.onFilterChange();
   }
 
-  onColorChange(color: string, checked: boolean): void {
-    if (checked) {
-      this.selectedColors.push(color);
+  onColorChange(color: string, event: Event): void {
+    // For button clicks, toggle the selection or remove
+    if (event.type === 'click') {
+      // Special case for the remove button in the selected colors list
+      if ((event.target as HTMLElement).closest('.rounded-full')) {
+        const index = this.selectedColors.indexOf(color);
+        if (index !== -1) {
+          this.selectedColors.splice(index, 1);
+        }
+      } else {
+        // For color button clicks, toggle selection
+        const index = this.selectedColors.indexOf(color);
+        if (index === -1) {
+          this.selectedColors.push(color);
+        } else {
+          this.selectedColors.splice(index, 1);
+        }
+      }
     } else {
-      const index = this.selectedColors.indexOf(color);
-      if (index !== -1) {
-        this.selectedColors.splice(index, 1);
+      // For checkbox events
+      const checked = (event.target as HTMLInputElement).checked;
+      if (checked) {
+        this.selectedColors.push(color);
+      } else {
+        const index = this.selectedColors.indexOf(color);
+        if (index !== -1) {
+          this.selectedColors.splice(index, 1);
+        }
       }
     }
     this.onFilterChange();

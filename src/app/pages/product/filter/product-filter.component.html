@@ -1,97 +1,291 @@
-<div class="filter-container">
-  <div class="filter-header">
-    <h3>Filter Products</h3>
-    <button class="clear-btn" (click)="clearFilters()">Clear All</button>
-  </div>
-
+<div class="space-y-6">
   <!-- Sort Options -->
-  <div class="sort-options">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Sort By</mat-label>
-      <mat-select [(ngModel)]="selectedSort" (selectionChange)="onSortChange($event.value)">
-        <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+  <div class="mb-6">
+    <label for="sort" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sort By</label>
+    <div class="relative">
+      <select 
+        id="sort"
+        [(ngModel)]="selectedSort" 
+        (change)="onSortChange(selectedSort)"
+        class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-accent focus:border-accent text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white appearance-none"
+      >
+        <option *ngFor="let option of sortOptions" [value]="option.value">
           {{ option.label }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        </option>
+      </select>
+      <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+    </div>
   </div>
 
-  <mat-accordion>
-    <!-- Price Range Filter -->
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Price Range</mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="price-range">
-        <mat-slider [min]="0" [max]="200000" [step]="1000" [discrete]="true">
-          <input matSliderStartThumb [(ngModel)]="priceRange[0]" (ngModelChange)="onFilterChange()">
-          <input matSliderEndThumb [(ngModel)]="priceRange[1]" (ngModelChange)="onFilterChange()">
-        </mat-slider>
-        <div class="price-values">
-          <span>₹{{ priceRange[0] }}</span>
-          <span>₹{{ priceRange[1] }}</span>
+  <!-- Price Range Filter -->
+  <div class="mb-6">
+    <div class="hs-accordion-group">
+      <div class="hs-accordion active" id="price-accordion">
+        <button 
+          class="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-accent dark:text-gray-200 dark:hover:text-accent"
+          aria-controls="price-collapse"
+        >
+          <span>Price Range</span>
+          <svg class="hs-accordion-active:rotate-180 w-4 h-4 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div 
+          id="price-collapse" 
+          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+        >
+          <div class="pb-4 space-y-3">
+            <!-- Custom Range Slider -->
+            <div class="relative pt-5 pb-8">
+              <div class="h-1 bg-gray-200 dark:bg-gray-700 rounded-full">
+                <div 
+                  class="absolute h-1 bg-accent rounded-full" 
+                  [style.left]="(priceRange[0] / 200000) * 100 + '%'" 
+                  [style.right]="100 - (priceRange[1] / 200000) * 100 + '%'"
+                ></div>
+              </div>
+              <input 
+                type="range" 
+                [min]="0" 
+                [max]="200000" 
+                [step]="1000" 
+                [(ngModel)]="priceRange[0]" 
+                (ngModelChange)="onFilterChange()" 
+                class="absolute top-0 left-0 w-full h-5 opacity-0 cursor-pointer"
+              >
+              <input 
+                type="range" 
+                [min]="0" 
+                [max]="200000" 
+                [step]="1000" 
+                [(ngModel)]="priceRange[1]" 
+                (ngModelChange)="onFilterChange()" 
+                class="absolute top-0 left-0 w-full h-5 opacity-0 cursor-pointer"
+              >
+              <div 
+                class="absolute w-4 h-4 bg-accent rounded-full top-0 -mt-1.5 cursor-pointer" 
+                [style.left]="(priceRange[0] / 200000) * 100 + '%'"
+              ></div>
+              <div 
+                class="absolute w-4 h-4 bg-accent rounded-full top-0 -mt-1.5 cursor-pointer" 
+                [style.left]="(priceRange[1] / 200000) * 100 + '%'"
+              ></div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+              <span>₹{{ priceRange[0] | number:'1.0-0' }}</span>
+              <span>₹{{ priceRange[1] | number:'1.0-0' }}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </mat-expansion-panel>
+    </div>
+  </div>
 
-    <!-- Categories Filter -->
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Categories</mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="categories-list">
-        <mat-checkbox *ngFor="let category of categories"
-                      [checked]="selectedCategories.includes(category)"
-                      (change)="onCategoryChange(category, $event.checked)">
-          {{ category }}
-        </mat-checkbox>
+  <!-- Categories Filter -->
+  <div class="mb-6">
+    <div class="hs-accordion-group">
+      <div class="hs-accordion active" id="categories-accordion">
+        <button 
+          class="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-accent dark:text-gray-200 dark:hover:text-accent"
+          aria-controls="categories-collapse"
+        >
+          <span>Categories</span>
+          <svg class="hs-accordion-active:rotate-180 w-4 h-4 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div 
+          id="categories-collapse" 
+          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+        >
+          <div class="pb-4 space-y-3">
+            <div *ngFor="let category of categories" class="flex items-center">
+              <input 
+                type="checkbox" 
+                [id]="'category-' + category" 
+                [checked]="selectedCategories.includes(category)" 
+                (change)="onCategoryChange(category, $event)" 
+                class="h-4 w-4 rounded border-gray-300 text-accent focus:ring-accent dark:border-gray-600 dark:bg-gray-800"
+              >
+              <label [for]="'category-' + category" class="ml-3 text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:text-accent transition-colors">
+                {{ category }}
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-expansion-panel>
+    </div>
+  </div>
 
-    <!-- Sizes Filter -->
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Sizes</mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="sizes-list">
-        <mat-checkbox *ngFor="let size of sizes"
-                      [checked]="selectedSizes.includes(size)"
-                      (change)="onSizeChange(size, $event.checked)">
-          {{ size }}
-        </mat-checkbox>
+  <!-- Sizes Filter -->
+  <div class="mb-6">
+    <div class="hs-accordion-group">
+      <div class="hs-accordion active" id="sizes-accordion">
+        <button 
+          class="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-accent dark:text-gray-200 dark:hover:text-accent"
+          aria-controls="sizes-collapse"
+        >
+          <span>Sizes</span>
+          <svg class="hs-accordion-active:rotate-180 w-4 h-4 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div 
+          id="sizes-collapse" 
+          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+        >
+          <div class="pb-4">
+            <div class="flex flex-wrap gap-2">
+              <button 
+                *ngFor="let size of sizes" 
+                class="inline-flex items-center justify-center w-10 h-10 text-sm font-medium rounded-md border transition-colors" 
+                [class.bg-accent]="selectedSizes.includes(size)" 
+                [class.text-white]="selectedSizes.includes(size)" 
+                [class.border-accent]="selectedSizes.includes(size)" 
+                [class.bg-white]="!selectedSizes.includes(size)" 
+                [class.dark:bg-gray-800]="!selectedSizes.includes(size)" 
+                [class.text-gray-700]="!selectedSizes.includes(size)" 
+                [class.dark:text-gray-300]="!selectedSizes.includes(size)" 
+                [class.border-gray-300]="!selectedSizes.includes(size)" 
+                [class.dark:border-gray-700]="!selectedSizes.includes(size)" 
+                [class.hover:border-accent]="!selectedSizes.includes(size)" 
+                (click)="onSizeChange(size, $event)"
+              >
+                {{ size }}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-expansion-panel>
+    </div>
+  </div>
 
-    <!-- Colors Filter -->
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Colors</mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="colors-list">
-        <mat-checkbox *ngFor="let color of colors"
-                      [checked]="selectedColors.includes(color)"
-                      (change)="onColorChange(color, $event.checked)">
-          <span class="color-dot" [style.background-color]="color.toLowerCase()"></span>
-          {{ color }}
-        </mat-checkbox>
+  <!-- Colors Filter -->
+  <div class="mb-6">
+    <div class="hs-accordion-group">
+      <div class="hs-accordion active" id="colors-accordion">
+        <button 
+          class="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-accent dark:text-gray-200 dark:hover:text-accent"
+          aria-controls="colors-collapse"
+        >
+          <span>Colors</span>
+          <svg class="hs-accordion-active:rotate-180 w-4 h-4 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div 
+          id="colors-collapse" 
+          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+        >
+          <div class="pb-4">
+            <div class="flex flex-wrap gap-3">
+              <button 
+                *ngFor="let color of colors" 
+                class="relative inline-flex items-center justify-center w-8 h-8 rounded-full border-2 transition-colors" 
+                [style.background-color]="color.toLowerCase()" 
+                [class.border-gray-300]="!selectedColors.includes(color)" 
+                [class.border-accent]="selectedColors.includes(color)" 
+                (click)="onColorChange(color, $event)"
+                [attr.aria-label]="color"
+                [attr.title]="color"
+              >
+                <svg *ngIf="selectedColors.includes(color)" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span 
+                *ngFor="let color of selectedColors" 
+                class="inline-flex items-center py-1 px-2 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+              >
+                {{ color }}
+                <button 
+                  type="button" 
+                  class="flex-shrink-0 ml-1 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-700 focus:outline-none dark:text-gray-400 dark:hover:text-gray-200"
+                  (click)="onColorChange(color, $event)"
+                >
+                  <span class="sr-only">Remove {{ color }}</span>
+                  <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                    <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-expansion-panel>
+    </div>
+  </div>
 
-    <!-- Ratings Filter -->
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Ratings</mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="ratings-list">
-        <mat-checkbox *ngFor="let rating of ratings"
-                      [checked]="selectedRatings.includes(rating)"
-                      (change)="onRatingChange(rating, $event.checked)">
-          <span class="rating-stars">
-            <mat-icon *ngFor="let star of [].constructor(rating)" class="star-icon">star</mat-icon>
-            <mat-icon *ngFor="let star of [].constructor(5-rating)" class="star-icon empty">star_border</mat-icon>
-          </span>
-        </mat-checkbox>
+  <!-- Ratings Filter -->
+  <div class="mb-6">
+    <div class="hs-accordion-group">
+      <div class="hs-accordion active" id="ratings-accordion">
+        <button 
+          class="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-accent dark:text-gray-200 dark:hover:text-accent"
+          aria-controls="ratings-collapse"
+        >
+          <span>Ratings</span>
+          <svg class="hs-accordion-active:rotate-180 w-4 h-4 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div 
+          id="ratings-collapse" 
+          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+        >
+          <div class="pb-4 space-y-3">
+            <div *ngFor="let rating of ratings" class="flex items-center">
+              <input 
+                type="checkbox" 
+                [id]="'rating-' + rating" 
+                [checked]="selectedRatings.includes(rating)" 
+                (change)="onRatingChange(rating, $event)" 
+                class="h-4 w-4 rounded border-gray-300 text-accent focus:ring-accent dark:border-gray-600 dark:bg-gray-800"
+              >
+              <label [for]="'rating-' + rating" class="ml-3 text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:text-accent transition-colors flex items-center">
+                <div class="flex">
+                  <svg *ngFor="let i of [].constructor(rating)" class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <svg *ngFor="let i of [].constructor(5-rating)" class="w-4 h-4 text-gray-300 dark:text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                </div>
+                <span class="ml-1">& Up</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-expansion-panel>
-  </mat-accordion>
+    </div>
+  </div>
+
+  <!-- Apply Filters Button (Mobile Only) -->
+  <div class="mt-8 lg:hidden">
+    <button 
+      class="w-full py-3 px-4 bg-accent hover:bg-accent-dark text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+      (click)="onFilterChange()"
+    >
+      Apply Filters
+    </button>
+  </div>
+
+  <!-- Clear All Filters -->
+  <div class="mt-4 flex justify-center">
+    <button 
+      class="text-sm text-accent hover:text-accent-dark flex items-center space-x-1 focus:outline-none"
+      (click)="clearFilters()"
+    >
+      <span>Clear all filters</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+      </svg>
+    </button>
+  </div>
 </div>
